@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id               String   @id @default(cuid())
+
+  source           String
+  externalJobId    String
+
+  companyName      String
+  title            String
+
+  location         String?
+  employmentType   String?
+
+  score Int @default(0)
+
+  remoteStatus     Boolean @default(false)
+
+  department       String?
+
+  description      String?
+
+  applicationUrl   String
+
+  postedAt         DateTime?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([source, externalJobId])
+}
+
+model Company {
+  id String @id @default(cuid())
+
+  name String @unique
+
+  ats String
+
+  board String
+
+  careerUrl String?
+
+  homepageUrl String?
+
+  confidence      Int?      
+
+  lastVerifiedAt  DateTime?
+
+  priority Int @default(3)
+
+  enabled Boolean @default(true)
+
+  category String?
+
+  bestFitRoles String?
+
+  techStack String?
+
+  lastSyncedAt   DateTime?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+}
+
+model WatchlistCompany {
+  id          String   @id @default(cuid())
+
+  companyName String   @unique
+
+  priority    Int      @default(1)
+
+  createdAt   DateTime @default(now())
+}
