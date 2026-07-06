@@ -9,6 +9,7 @@ import { RankingService } from '../ranking/ranking.service';
 import { NormalizedJob } from './interfaces/normalized-jobs.interface';
 import { shouldSaveJob } from './helpers/job-filter';
 import { normalizeTitle } from './helpers/job-normalizer';
+import { detectExperience } from '../helpers/experience-detector';
 
 @Injectable()
 export class JobsService {
@@ -22,6 +23,18 @@ export class JobsService {
 ) {}
 
   async upsertJob(job: NormalizedJob) {
+         job.title =
+      normalizeTitle(job.title);
+    job.experienceLevel =
+      detectExperience(job.title);
+
+
+      if (!shouldSaveJob(job)) {
+          return;
+      }
+
+      job.score =
+      this.rankingService.calculate(job);
     const existing =
       await this.prisma.job.findUnique({
         where: {
@@ -41,13 +54,8 @@ export class JobsService {
       });
     }
 
-    job.title = normalizeTitle(job.title);
+  
 
-    if (!shouldSaveJob(job)) {
-    return;
-    }
-
-    job.score = this.rankingService.calculate(job);
     const created =
       await this.prisma.job.create({
         data: {...job},
@@ -67,6 +75,81 @@ export class JobsService {
     return created;
   }
 
+
+  async getSummary() {
+  const [
+    totalJobs,
+    remoteJobs,
+    companies,
+    sources,
+  ] = await Promise.all([
+    this.prisma.job.count(),
+
+    this.prisma.job.count({
+      where: {
+        remoteStatus: true,
+      },
+    }),
+
+    this.prisma.job.findMany({
+      distinct: ['companyName'],
+      select: {
+        companyName: true,
+      },
+    }),
+
+    this.prisma.job.findMany({
+      distinct: ['source'],
+      select: {
+        source: true,
+      },
+    }),
+  ]);
+
+  return {
+    totalJobs,
+    remoteJobs,
+    companies: companies.length,
+    sources: sources.length,
+  };
+}
+
+
+async getFacets() {
+  const [companies, sources] =
+    await Promise.all([
+      this.prisma.job.findMany({
+        distinct: ['companyName'],
+        select: {
+          companyName: true,
+        },
+        orderBy: {
+          companyName: 'asc',
+        },
+      }),
+
+      this.prisma.job.findMany({
+        distinct: ['source'],
+        select: {
+          source: true,
+        },
+        orderBy: {
+          source: 'asc',
+        },
+      }),
+    ]);
+
+  return {
+    companies: companies.map(
+      c => c.companyName,
+    ),
+
+    sources: sources.map(
+      s => s.source,
+    ),
+  };
+}
+
   async findAll(filters: {
        q?: string;
 
@@ -83,6 +166,7 @@ export class JobsService {
     page?: number;
 
     limit?: number;
+    experience?: string;
   }) {
     const page = filters.page ?? 1;
     const limit = filters.limit ?? 20;
@@ -152,21 +236,27 @@ export class JobsService {
 
       ...(filters.source && {
 
-    source: filters.source,
+        source: filters.source,
 
-    }),
+      }),
 
-    ...(filters.location && {
+      ...(filters.location && {
 
         location: {
 
-            contains: filters.location,
+          contains: filters.location,
 
-            mode: "insensitive",
+          mode: "insensitive",
 
         },
 
-    }),
+      }),
+
+      ...(filters.experience && {
+
+        experienceLevel: filters.experience,
+
+      }),
     };
 
     const total =

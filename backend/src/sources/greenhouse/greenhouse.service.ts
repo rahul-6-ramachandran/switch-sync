@@ -49,13 +49,7 @@ export class GreenhouseService extends BaseAdapter {
         const location =
         job.location?.name;
 
-        if (!isAllowedLocation(location)) {
-            continue;
-        }
-
-        if (!isRelevantJob(job.title)) {
-            continue;
-        }
+        
       await this.jobsService.upsertJob({
           source: this.source,
 

@@ -1,3 +1,5 @@
+import { ExperienceLevel } from "../../helpers/experience-detector";
+
 export interface NormalizedJob {
   source: string;
 
@@ -17,4 +19,5 @@ export interface NormalizedJob {
 
   description?: string;
     score?: number;
+    experienceLevel?: ExperienceLevel;
 }

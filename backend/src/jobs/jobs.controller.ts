@@ -12,6 +12,17 @@ export class JobsController {
     private readonly jobsService: JobsService,
   ) {}
 
+
+  @Get('summary')
+    getSummary() {
+      return this.jobsService.getSummary();
+    }
+
+    @Get('facets')
+    getFacets() {
+      return this.jobsService.getFacets();
+    }
+
   @Get()
   async findAll(
     @Query('q') q?: string,
@@ -32,6 +43,9 @@ export class JobsController {
 
     @Query("postedWithinDays")
     postedWithinDays?: string,
+
+     @Query("experience")
+    experience?: string,
   ) {
     return this.jobsService.findAll({
       q,
@@ -50,6 +64,11 @@ export class JobsController {
       source,
 
       location,
+
+      experience:
+        experience !== undefined
+          ? experience
+          : undefined,
 
       postedWithinDays:
           postedWithinDays

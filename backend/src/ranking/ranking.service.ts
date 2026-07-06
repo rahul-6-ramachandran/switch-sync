@@ -46,3 +46,40 @@ export class RankingService {
   }
 
 }
+
+// @Injectable()
+// export class RankingService {
+
+//   calculate(job: {
+//     title: string;
+//     location?: string | null;
+//     source: string;
+//     postedAt?: Date | null;
+//   }) {
+
+//     const role = roleScore(job.title);
+//     const experience = experienceScore(job.title);
+//     const skills = skillsScore(job.title);
+//     const location = locationScore(job.location);
+//     const freshness = freshnessScore(job.postedAt);
+//     const ats = atsScore(job.source);
+
+//     console.log({
+//       role,
+//       experience,
+//       skills,
+//       location,
+//       freshness,
+//       ats,
+//     });
+
+//     return (
+//       role +
+//       experience +
+//       skills +
+//       location +
+//       freshness +
+//       ats
+//     );
+//   }
+// }
