@@ -80,10 +80,14 @@ export class GreenhouseService extends BaseAdapter {
   `${companyName}: ${synced}/${data.jobs.length} relevant jobs`,
 );
     } catch (error) {
-      this.logger.error(
-        `Failed syncing ${companyName}`,
-        error,
-      );
+      const message =
+                error instanceof Error
+                    ? error.message
+                    : "Unknown error";
+
+            this.logger.warn(
+                `${company.name}: ${message}`,
+            );
     }
   }
 }

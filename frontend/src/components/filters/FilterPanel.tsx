@@ -129,7 +129,7 @@ export function FilterPanel({
               <SelectValue placeholder="All companies" />
             </SelectTrigger>
 
-            <SelectContent>
+            <SelectContent className="max-h-80 overflow-y-auto">
 
               <SelectItem value={ALL}>
                 All companies

@@ -80,25 +80,15 @@ private readonly logger =
             }
 
             try {
-
                 await adapter.sync(companies);
 
                 adaptersProcessed++;
                 companiesProcessed += companies.length;
 
-                this.logger.log(
-                `${adapter.source} completed.`,
-                );
-
+                this.logger.log(`${adapter.source} completed.`);
             } catch (error) {
-
-                this.logger.error(
-                `${adapter.source} failed.`,
-                error,
-                );
-
+                this.logger.error(`${adapter.source} failed.`);
             }
-
             }
             } finally {
 

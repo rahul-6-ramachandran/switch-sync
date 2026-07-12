@@ -10,6 +10,8 @@ import { WorkdayDetector } from "./detectors/workday.detector";
 import { WorkableDetector } from "./detectors/workable.detector";
 import { SmartRecruiterDetector } from "./detectors/smart-recruiter.detector";
 import { HtmlModule } from "../common/html/html.module";
+import { AssetExtractor } from "./extractors/asset.extractor";
+import { EndpointExtractor } from "./extractors/endpoint.extractor";
 @Module({
   imports: [CompanyModule,HtmlModule],
   providers: [
@@ -21,7 +23,10 @@ import { HtmlModule } from "../common/html/html.module";
     WorkdayDetector,
     WorkableDetector,
     SmartRecruiterDetector,
+      AssetExtractor,
+          EndpointExtractor,
   ],
   controllers: [DiscoveryController],
+  exports:[AssetExtractor, EndpointExtractor]
 })
 export class DiscoveryModule {}

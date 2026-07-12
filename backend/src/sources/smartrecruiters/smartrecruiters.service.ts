@@ -99,10 +99,14 @@ export class SmartRecruitersService extends BaseAdapter {
 
     } catch (error) {
 
-      this.logger.error(
-        `Failed syncing ${company.name}`,
-        error,
-      );
+      const message =
+                error instanceof Error
+                    ? error.message
+                    : "Unknown error";
+
+            this.logger.warn(
+                `${company.name}: ${message}`,
+            );
 
     }
   }

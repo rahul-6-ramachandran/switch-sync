@@ -1,94 +1,111 @@
 export const engineeringKeywords = [
-  // Software Engineer
+
   "software engineer",
   "software developer",
   "software development engineer",
-  "engineer",
 
-  // Backend
   "backend engineer",
   "backend developer",
   "back end engineer",
   "back end developer",
-  "backend software engineer",
-  "backend software developer",
 
-  // Full Stack
   "full stack engineer",
   "full stack developer",
-  "fullstack engineer",
-  "fullstack developer",
   "full-stack engineer",
   "full-stack developer",
+  "fullstack engineer",
+  "fullstack developer",
 
-  // Frontend (keep for broader opportunities)
-  "frontend engineer",
-  "frontend developer",
-  "front end engineer",
-  "front end developer",
-
-  // Platform / Infra
-  "platform engineer",
-  "platform developer",
-  "infrastructure engineer",
-  "cloud engineer",
-  "site reliability engineer",
-  "sre",
-  "devops engineer",
-
-  // API / Services
-  "api engineer",
-  "services engineer",
-
-  // Languages / Frameworks
-  "node",
-  "nodejs",
-  "node.js",
-  "typescript",
-  "javascript",
-  "react",
-
-  // Generic
   "application engineer",
 
-  // Common abbreviations
+  "node.js",
+  "nodejs",
+
   "sde",
-  "sde1",
-  "sde2",
   "sde 1",
+  "sde1",
   "sde 2",
+  "sde2",
+
+  "member of technical staff",
+  "mts",
+  "mts 1",
+  "mts1",
+  "mts 2",
+  "mts2",
+
 ];
 export const excludedKeywords = [
+
   "intern",
   "internship",
 
-  "sales",
-  "marketing",
-  "recruiter",
-  "talent",
-  "human resources",
-  "hr",
+  "staff",
 
-  "customer success",
-  "customer support",
-  "technical support",
+  "principal",
+
+  "lead",
+
+  "director",
+
+  "distinguished",
+
+  "architect",
+
+  "manager",
+
+  "vp",
+
+  "vice president",
+
+  "head of",
+
+  "chief",
+
+  "fellow",
+
+  "qa",
+
+  "quality assurance",
+
+  "test engineer",
+
+  "automation engineer",
+
+  "embedded",
+
+  "firmware",
+
+  "electrical",
+
+  "mechanical",
+
+  "hardware",
+
+  "network",
+
+  "security analyst",
+
+  "sales",
+
+  "solutions engineer",
+
+  "support",
+
+  "customer",
+
+  "marketing",
 
   "finance",
+
   "legal",
-  "accounting",
 
-  "account executive",
-  "account manager",
+  "recruiter",
 
-  "business development",
+  "talent",
 
-  "designer",
-  "ux",
-  "ui",
+  "hr",
 
-  "product manager",
-  "program manager",
-  "project manager",
 ];
 
 export const engineeringDepartments = [
@@ -99,6 +116,16 @@ export const engineeringDepartments = [
   "technology",
   "it",
 ];
+
+export enum RemoteType {
+
+    NONE,
+
+    INDIA,
+
+    GLOBAL,
+
+}
 
 export const ATS = {
     GREENHOUSE: 'greenhouse',

@@ -1,7 +1,6 @@
-import { isRelevantJob } from "../../helpers/helpers";
+import { isRelevantJob, isTargetLocation } from "../../helpers/helpers";
 import { isAllowedLocation } from "../../helpers/location-filters";
 import { NormalizedJob } from "../interfaces/normalized-jobs.interface";
-
 export function shouldSaveJob(
   job: NormalizedJob,
 ): boolean {
@@ -10,7 +9,7 @@ export function shouldSaveJob(
     return false;
   }
 
-  if (!isAllowedLocation(job.location)) {
+  if (!isTargetLocation(job.location)) {
     return false;
   }
 

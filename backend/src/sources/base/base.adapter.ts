@@ -12,25 +12,35 @@ export abstract class BaseAdapter
 
   async sync(companies: Company[]) {
 
-    this.logger.log(
-      `Sync started (${this.source})`,
-    );
+    let success = 0;
+    let failed = 0;
 
     for (const company of companies) {
-      try {
-        await this.syncCompany(company);
-      } catch (error) {
-        this.logger.error(
-          `${company.name} failed`,
-          error,
-        );
-      }
+
+        try {
+
+            await this.syncCompany(company);
+            success++;
+
+        } catch (error) {
+
+            failed++;
+
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "Unknown error";
+
+            this.logger.warn(
+                `${company.name}: ${message}`,
+            );
+        }
     }
 
     this.logger.log(
-      `Sync completed (${this.source})`,
+        `Completed (${success} success, ${failed} failed)`,
     );
-  }
+}
 
   protected abstract syncCompany(
     company: Company,

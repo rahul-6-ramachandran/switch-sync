@@ -20,6 +20,7 @@ model Job {
   employmentType   String?
 
 
+
   experienceLevel String?
   score Int @default(0)
 
@@ -30,6 +31,7 @@ model Job {
   description      String?
 
   applicationUrl   String
+
 
   postedAt         DateTime?
 
@@ -48,6 +50,12 @@ model Company {
 
   board String
 
+
+  boardUrl   String? 
+  requestBody   Json?   
+  applyBaseUrl String?
+
+  
   careerUrl String?
 
   homepageUrl String?

@@ -74,16 +74,14 @@ protected async syncCompany(
         `${companyName}: ${synced} jobs synced`,
       );
     } catch (error: any) {
-      this.logger.error(
-        `Failed syncing ${companyName}`,
-        error,
-      );
+      const message =
+                error instanceof Error
+                    ? error.message
+                    : "Unknown error";
 
-
-    this.logger.error(
-        error?.response?.data ??
-        error?.message,
-    );
+            this.logger.warn(
+                `${company.name}: ${message}`,
+            );
     }
   }
 }
