@@ -1,6 +1,6 @@
-#  HireScope (formerly Job Radar)
 
 <div align="center">
+#  HireScope (formerly Job Radar)
 
 ### A production-grade job discovery engine for Software Engineers
 
