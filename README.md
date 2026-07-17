@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 HireScope
+# HireScope
 
 ### A production-grade job discovery engine for Software Engineers
 
