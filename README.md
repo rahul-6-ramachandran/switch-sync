@@ -1,14 +1,12 @@
-# HireScope (formerly Job Radar)
+<div align="center">
 
-```{=html}
-<p align="center">
-```
-`<b>`{=html}A production-grade job discovery engine for Software
-Engineers.`</b>`{=html}`<br>`{=html} Discover newly posted jobs from
-product companies before they reach traditional job boards.
-```{=html}
-</p>
-```
+# 🚀 HireScope
+
+### A production-grade job discovery engine for Software Engineers
+
+Discover newly posted jobs from product companies before they reach traditional job boards.
+
+</div>
 
 ------------------------------------------------------------------------
 
