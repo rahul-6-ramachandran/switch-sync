@@ -19,7 +19,7 @@ Discover newly posted engineering jobs from 200+ product companies **before they
 
 ---
 
-# 📖 Table of Contents
+## 📖 Table of Contents
 
 - Motivation
 - Features
@@ -37,7 +37,7 @@ Discover newly posted engineering jobs from 200+ product companies **before they
 
 ---
 
-# 💡 Motivation
+## 💡 Motivation
 
 After sending **2000+ applications** and attending **28+ interviews**, I realized the biggest bottleneck wasn't interview preparation—it was discovering relevant openings before thousands of applicants.
 
@@ -47,7 +47,7 @@ HireScope continuously discovers, filters, ranks, and notifies me about newly pu
 
 ---
 
-# ✨ Features
+## ✨ Features
 
 - Hourly automated synchronization
 - Modular ATS adapter architecture
@@ -62,7 +62,7 @@ HireScope continuously discovers, filters, ranks, and notifies me about newly pu
 
 ---
 
-# 🏗️ System Architecture
+## 🏗️ System Architecture
 
 ```mermaid
 flowchart TD
@@ -91,7 +91,7 @@ F --> G
 G --> H
 ```
 
-# 🔄 Synchronization Pipeline
+## 🔄 Synchronization Pipeline
 
 ```mermaid
 flowchart TD
@@ -112,7 +112,7 @@ L[Telegram]
 A-->B-->C-->D-->E-->F-->G-->H-->I-->J-->K-->L
 ```
 
-# 🧩 Adapter Pattern
+## 🧩 Adapter Pattern
 
 Every ATS implements the same contract.
 
@@ -132,7 +132,7 @@ Adding a new ATS typically requires:
 
 ---
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 | Category | Technologies |
 |-----------|--------------|
@@ -144,9 +144,9 @@ Adding a new ATS typically requires:
 | DevOps | Docker |
 | Notifications | Telegram Bot API |
 
-# 🗄️ Database
+## 🗄️ Database
 
-## Company
+### Company
 
 Stores ATS configuration including:
 - board
@@ -157,7 +157,7 @@ Stores ATS configuration including:
 - enabled
 - lastSyncedAt
 
-## Job
+### Job
 
 Stores normalized jobs:
 - externalJobId
@@ -170,14 +170,14 @@ Stores normalized jobs:
 - description
 - applicationUrl
 
-# 🎯 Filtering
+## 🎯 Filtering
 
 - Relevant engineering titles only
 - India / India Remote / Global Remote
 - Experience extraction from descriptions
 - Skip overly senior roles
 
-# 📊 Ranking
+## 📊 Ranking
 
 Current inputs:
 - Job title
@@ -189,7 +189,7 @@ Future:
 - Skill matching
 - Personalized preferences
 
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```text
 backend/
@@ -201,7 +201,7 @@ frontend/
 docker-compose.yml
 ```
 
-# ⚙️ Engineering Decisions
+## ⚙️ Engineering Decisions
 
 - Adapter Pattern
 - Registry Pattern
@@ -211,7 +211,7 @@ docker-compose.yml
 - Low request rate
 - Public endpoints only
 
-# 🚀 Performance
+##  Performance
 
 - Detail pages fetched only after filters
 - Duplicate prevention
@@ -219,7 +219,7 @@ docker-compose.yml
 - Resilient syncs
 - Continue after adapter failures
 
-# 🔮 Roadmap
+## 🔮 Roadmap
 
 - Better Workday detail strategies
 - Ashby support
@@ -229,7 +229,7 @@ docker-compose.yml
 - Production deployment
 - Multi-user support
 
-# ▶️ Local Setup
+## ▶️ Local Setup
 
 ```bash
 git clone <repo>
@@ -239,7 +239,7 @@ npx prisma migrate deploy
 npm run start:dev
 ```
 
-# .env setup
+## .env setup
 
 
 ```bash
@@ -248,6 +248,6 @@ TELEGRAM_BOT_TOKEN
 TELEGRAM_CHAT_ID
 ```
 
-# 📄 License
+## 📄 License
 
 Portfolio project by **Rahul Ramachandran**.
