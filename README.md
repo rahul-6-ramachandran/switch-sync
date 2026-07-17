@@ -1,10 +1,11 @@
-
 <div align="center">
-#  HireScope (formerly Job Radar)
+
+<h1> HireScope</h1>
+
 
 ### A production-grade job discovery engine for Software Engineers
 
-Discover newly posted engineering jobs from product companies **before they reach traditional job boards**.
+Discover newly posted engineering jobs from 200+ product companies **before they reach traditional job boards**.
 
 **NestJS • TypeScript • PostgreSQL • Prisma • React • Docker**
 
