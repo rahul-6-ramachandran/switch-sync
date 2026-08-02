@@ -16,7 +16,7 @@ async function bootstrap() {
 
   await app.listen(port);
 
-  console.log(`🚀 HireScope API running on port ${port}`);
+  console.log(` HireScope API running on port ${port}`);
 }
 
 bootstrap();
