@@ -4,6 +4,7 @@ import { GreenhouseService } from '../sources/greenhouse/greenhouse.service';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { JobSourceAdapter } from '../sources/interfaces/job-source.interface';
 import { AdapterRegistry } from '../sources/registry/adapter.registry';
+import { JobsService } from '../jobs/jobs.service';
 
 @Injectable()
 export class EngineService {
@@ -13,6 +14,7 @@ export class EngineService {
   constructor(
     private registry: AdapterRegistry,
     private readonly companyService: CompanyService,
+    private readonly jobService : JobsService
   ) {}
 
   getStatus() {
@@ -44,6 +46,7 @@ export class EngineService {
 
     this.isRunning = true;
 
+    this.jobService.resetRunCounter();
     const started = Date.now();
 
     this.logger.log('================================');
@@ -80,6 +83,10 @@ export class EngineService {
       this.logger.log('Summary');
       this.logger.log(`Adapters : ${adaptersProcessed}`);
       this.logger.log(`Companies : ${companiesProcessed}`);
+
+      this.logger.log(
+        `New Jobs : ${this.jobService.getRunCounter()}`,
+      );
 
       const duration = ((Date.now() - started) / 1000).toFixed(2);
 

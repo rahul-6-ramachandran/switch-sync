@@ -22,6 +22,19 @@ export class JobsService {
   private readonly rankingService: RankingService,
 ) {}
 
+private newJobsThisRun = 0;
+
+resetRunCounter() {
+  this.newJobsThisRun = 0;
+}
+
+incrementRunCounter() {
+  this.newJobsThisRun++;
+}
+
+getRunCounter() {
+  return this.newJobsThisRun;
+}
   async upsertJob(job: NormalizedJob) {
          job.title =
       normalizeTitle(job.title);
@@ -86,7 +99,7 @@ export class JobsService {
         data: {...job},
       });
 
-      
+      this.incrementRunCounter();
 
     try {
       await this.telegramService.sendNewJob(created);
