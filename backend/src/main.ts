@@ -1,15 +1,22 @@
 import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
-import { TelegramService } from './notifications/telegram/telegram.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-   app.enableCors({
-    origin: "http://localhost:5173",
+  const configService = app.get(ConfigService);
+
+  app.enableCors({
+    origin: configService.getOrThrow<string>('FRONTEND_URL'),
     credentials: true,
   });
-  await app.listen(process.env.PORT ?? 3000);
-  
+
+  const port = configService.getOrThrow<number>('PORT');
+
+  await app.listen(port);
+
+  console.log(`🚀 HireScope API running on port ${port}`);
 }
+
 bootstrap();

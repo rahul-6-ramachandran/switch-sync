@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Job } from '@prisma/client';
+import { ConfigService } from '@nestjs/config';
 import TelegramBot from 'node-telegram-bot-api';
 
 @Injectable()
 export class TelegramService {
   private readonly bot: TelegramBot;
 
-  constructor() {
+  constructor(  private readonly configService: ConfigService) {
         this.bot = new TelegramBot(
-        process.env.TELEGRAM_BOT_TOKEN!,
+         this.configService.getOrThrow<string>('TELEGRAM_BOT_TOKEN'),
+      
         {
             polling: false,
         },
@@ -36,7 +38,7 @@ export class TelegramService {
     `;
 
     await this.bot.sendMessage(
-        process.env.TELEGRAM_CHAT_ID!,
+           this.configService.getOrThrow<string>('TELEGRAM_CHAT_ID'),
         message,
         {
         parse_mode: "HTML"
