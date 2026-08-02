@@ -5,18 +5,9 @@ import { CompanyModule } from '../company/company.module';
 import { HttpModule } from '../common/http/http.module';
 
 @Module({
-  imports: [
-    CompanyModule,
-    HttpModule,
-  ],
-  providers: [
-    HomepageService,
-  ],
-  controllers: [
-    HomepageController,
-  ],
-  exports: [
-    HomepageService,
-  ],
+  imports: [CompanyModule, HttpModule],
+  providers: [HomepageService],
+  controllers: [HomepageController],
+  exports: [HomepageService],
 })
 export class HomepageModule {}

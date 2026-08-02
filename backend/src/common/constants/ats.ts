@@ -1,15 +1,13 @@
 export enum ATS {
+  GREENHOUSE = 'greenhouse',
 
-    GREENHOUSE = 'greenhouse',
+  LEVER = 'lever',
 
-    LEVER = 'lever',
+  ASHBY = 'ashby',
 
-    ASHBY = 'ashby',
+  WORKDAY = 'workday',
 
-    WORKDAY = 'workday',
+  SMART_RECRUITERS = 'smartrecruiters',
 
-    SMART_RECRUITERS = 'smartrecruiters',
-
-    WORKABLE = 'workable',
-
+  WORKABLE = 'workable',
 }

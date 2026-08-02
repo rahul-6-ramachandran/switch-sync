@@ -1,5 +1,4 @@
 export interface JsFindings {
-
   ats: string[];
 
   apiEndpoints: string[];
@@ -11,5 +10,4 @@ export interface JsFindings {
   jsonFeeds: string[];
 
   frameworks: string[];
-
 }

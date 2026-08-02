@@ -8,7 +8,7 @@ export const tier1Companies = [
   'GitLab',
   'Shopify',
   'BrowserStack',
-  'Postman',   
+  'Postman',
   'Razorpay',
   'Chargebee',
   'Freshworks',

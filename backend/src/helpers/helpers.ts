@@ -1,73 +1,56 @@
-import { engineeringKeywords, excludedKeywords, RemoteType } from "../../constants";
+import {
+  engineeringKeywords,
+  excludedKeywords,
+  RemoteType,
+} from '../../constants';
 
 export const isRelevantJob = (title: string): boolean => {
   const t = title.toLowerCase();
 
-  const included = engineeringKeywords.some(k =>
-    t.includes(k),
-  );
+  const included = engineeringKeywords.some((k) => t.includes(k));
 
-  const excluded = excludedKeywords.some(k =>
-    t.includes(k),
-  );
+  const excluded = excludedKeywords.some((k) => t.includes(k));
 
   return included && !excluded;
 };
 
-export const isRemoteJob = (
-  location?: string | null,
-): boolean => {
-
-  return (
-    getRemoteType(location ?? undefined) !==
-    RemoteType.NONE
-  );
-
+export const isRemoteJob = (location?: string | null): boolean => {
+  return getRemoteType(location ?? undefined) !== RemoteType.NONE;
 };
 
-export function getRemoteType(
-    location?: string,
-): RemoteType {
+export function getRemoteType(location?: string): RemoteType {
+  if (!location) return RemoteType.NONE;
 
-    if (!location)
-        return RemoteType.NONE;
+  const l = location.toLowerCase();
 
-    const l =
-        location.toLowerCase();
+  if (
+    l.includes('anywhere') ||
+    l.includes('worldwide') ||
+    l.includes('global')
+  ) {
+    return RemoteType.GLOBAL;
+  }
 
-    if (
-        l.includes("anywhere") ||
-        l.includes("worldwide") ||
-        l.includes("global")
-    ) {
-        return RemoteType.GLOBAL;
-    }
-
-   if (
-    l.includes("remote") &&
-    (
-        l.includes("india") ||
-        l.includes("bangalore") ||
-        l.includes("bengaluru") ||
-        l.includes("hyderabad") ||
-        l.includes("pune") ||
-        l.includes("chennai") ||
-        l.includes("gurgaon") ||
-        l.includes("noida") ||
-        l.includes("kochi") ||
-        l.includes("mumbai")
-    )
-) {
+  if (
+    l.includes('remote') &&
+    (l.includes('india') ||
+      l.includes('bangalore') ||
+      l.includes('bengaluru') ||
+      l.includes('hyderabad') ||
+      l.includes('pune') ||
+      l.includes('chennai') ||
+      l.includes('gurgaon') ||
+      l.includes('noida') ||
+      l.includes('kochi') ||
+      l.includes('mumbai'))
+  ) {
     return RemoteType.INDIA;
+  }
+
+  return RemoteType.NONE;
 }
 
-    return RemoteType.NONE;
-}
-
-export function isTargetLocation(
-  location?: string | null,
-): boolean {
-
+export function isTargetLocation(location?: string | null): boolean {
   if (!location) {
     return true;
   }
@@ -76,23 +59,22 @@ export function isTargetLocation(
 
   // India onsite / hybrid
   const india =
-    l.includes("india") ||
-    l.includes("bangalore") ||
-    l.includes("bengaluru") ||
-    l.includes("hyderabad") ||
-    l.includes("pune") ||
-    l.includes("chennai") ||
-    l.includes("gurgaon") ||
-    l.includes("noida") ||
-    l.includes("kochi") ||
-    l.includes("mumbai");
+    l.includes('india') ||
+    l.includes('bangalore') ||
+    l.includes('bengaluru') ||
+    l.includes('hyderabad') ||
+    l.includes('pune') ||
+    l.includes('chennai') ||
+    l.includes('gurgaon') ||
+    l.includes('noida') ||
+    l.includes('kochi') ||
+    l.includes('mumbai');
 
   if (india) {
     return true;
   }
 
   switch (getRemoteType(location)) {
-
     case RemoteType.INDIA:
       return true;
 

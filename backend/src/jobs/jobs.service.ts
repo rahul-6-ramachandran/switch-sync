@@ -13,149 +13,123 @@ import { detectExperience } from '../helpers/experience-detector';
 
 @Injectable()
 export class JobsService {
-  private readonly logger =
-    new Logger(JobsService.name);
+  private readonly logger = new Logger(JobsService.name);
 
   constructor(
-  private readonly prisma: PrismaService,
-  private readonly telegramService: TelegramService,
-  private readonly rankingService: RankingService,
-) {}
+    private readonly prisma: PrismaService,
+    private readonly telegramService: TelegramService,
+    private readonly rankingService: RankingService,
+  ) {}
 
-private newJobsThisRun = 0;
+  private newJobsThisRun = 0;
 
-resetRunCounter() {
-  this.newJobsThisRun = 0;
-}
+  resetRunCounter() {
+    this.newJobsThisRun = 0;
+  }
 
-incrementRunCounter() {
-  this.newJobsThisRun++;
-}
+  incrementRunCounter() {
+    this.newJobsThisRun++;
+  }
 
-getRunCounter() {
-  return this.newJobsThisRun;
-}
+  getRunCounter() {
+    return this.newJobsThisRun;
+  }
   async upsertJob(job: NormalizedJob) {
-         job.title =
-      normalizeTitle(job.title);
-    job.experienceLevel =
-      detectExperience(job.title);
+    job.title = normalizeTitle(job.title);
+    job.experienceLevel = detectExperience(job.title);
 
+    if (!shouldSaveJob(job)) {
+      return;
+    }
 
-      if (!shouldSaveJob(job)) {
-          return;
-      }
-
-      job.score =
-      this.rankingService.calculate(job);
-    const existing =
-      await this.prisma.job.findUnique({
-        where: {
-          source_externalJobId: {
-            source: job.source,
-            externalJobId: job.externalJobId,
-          },
+    job.score = this.rankingService.calculate(job);
+    const existing = await this.prisma.job.findUnique({
+      where: {
+        source_externalJobId: {
+          source: job.source,
+          externalJobId: job.externalJobId,
         },
-      });
+      },
+    });
 
     if (existing) {
+      return this.prisma.job.update({
+        where: {
+          id: existing.id,
+        },
 
-  return this.prisma.job.update({
+        data: {
+          title: job.title,
 
-    where: {
-      id: existing.id,
-    },
+          companyName: job.companyName,
 
-    data: {
+          applicationUrl: job.applicationUrl,
 
-      title: job.title,
+          location: job.location,
 
-      companyName: job.companyName,
+          remoteStatus: job.remoteStatus,
 
-      applicationUrl: job.applicationUrl,
+          postedAt: job.postedAt,
 
-      location: job.location,
+          description: job.description,
 
-      remoteStatus: job.remoteStatus,
+          score: job.score,
 
-      postedAt: job.postedAt,
-
-      description: job.description,
-
-      score: job.score,
-
-      experienceLevel: job.experienceLevel,
-
-    },
-
-  });
-
-}
-
-  
-
-    const created =
-      await this.prisma.job.create({
-        data: {...job},
+          experienceLevel: job.experienceLevel,
+        },
       });
+    }
 
-      this.incrementRunCounter();
+    const created = await this.prisma.job.create({
+      data: { ...job },
+    });
+
+    this.incrementRunCounter();
 
     try {
       await this.telegramService.sendNewJob(created);
     } catch (error) {
-      this.logger.error(
-        'Failed to send Telegram notification',
-        error,
-      );
+      this.logger.error('Failed to send Telegram notification', error);
     }
 
     return created;
   }
 
-
   async getSummary() {
-  const [
-    totalJobs,
-    remoteJobs,
-    companies,
-    sources,
-  ] = await Promise.all([
-    this.prisma.job.count(),
+    const [totalJobs, remoteJobs, companies, sources] = await Promise.all([
+      this.prisma.job.count(),
 
-    this.prisma.job.count({
-      where: {
-        remoteStatus: true,
-      },
-    }),
+      this.prisma.job.count({
+        where: {
+          remoteStatus: true,
+        },
+      }),
 
-    this.prisma.job.findMany({
-      distinct: ['companyName'],
-      select: {
-        companyName: true,
-      },
-    }),
+      this.prisma.job.findMany({
+        distinct: ['companyName'],
+        select: {
+          companyName: true,
+        },
+      }),
 
-    this.prisma.job.findMany({
-      distinct: ['source'],
-      select: {
-        source: true,
-      },
-    }),
-  ]);
+      this.prisma.job.findMany({
+        distinct: ['source'],
+        select: {
+          source: true,
+        },
+      }),
+    ]);
 
-  return {
-    totalJobs,
-    remoteJobs,
-    companies: companies.length,
-    sources: sources.length,
-  };
-}
+    return {
+      totalJobs,
+      remoteJobs,
+      companies: companies.length,
+      sources: sources.length,
+    };
+  }
 
-
-async getFacets() {
-  const [companies, sources] =
-    await Promise.all([
+  async getFacets() {
+    const [companies, sources] = await Promise.all([
       this.prisma.job.findMany({
         distinct: ['companyName'],
         select: {
@@ -177,19 +151,15 @@ async getFacets() {
       }),
     ]);
 
-  return {
-    companies: companies.map(
-      c => c.companyName,
-    ),
+    return {
+      companies: companies.map((c) => c.companyName),
 
-    sources: sources.map(
-      s => s.source,
-    ),
-  };
-}
+      sources: sources.map((s) => s.source),
+    };
+  }
 
   async findAll(filters: {
-       q?: string;
+    q?: string;
 
     company?: string;
 
@@ -212,47 +182,43 @@ async getFacets() {
     let postedAtFilter;
 
     if (filters.postedWithinDays) {
+      const date = new Date();
 
-        const date = new Date();
+      date.setDate(date.getDate() - filters.postedWithinDays);
 
-        date.setDate(
-            date.getDate() - filters.postedWithinDays,
-        );
-
-        postedAtFilter = {
-            gte: date,
-        };
-
+      postedAtFilter = {
+        gte: date,
+      };
     }
 
     const where: Prisma.JobWhereInput = {
       ...(filters.q && {
-       OR: [
-        {
-          title: {
-            contains: filters.q,
-            mode: 'insensitive',
+        OR: [
+          {
+            title: {
+              contains: filters.q,
+              mode: 'insensitive',
+            },
           },
-        },
-        {
-          companyName: {
-            contains: filters.q,
-            mode: 'insensitive',
+          {
+            companyName: {
+              contains: filters.q,
+              mode: 'insensitive',
+            },
           },
-        },
-        {
-          location: {
-            contains: filters.q,
-            mode: 'insensitive',
+          {
+            location: {
+              contains: filters.q,
+              mode: 'insensitive',
+            },
           },
-        },
-        {
-          source: {
-            contains: filters.q,
-            mode: 'insensitive',
+          {
+            source: {
+              contains: filters.q,
+              mode: 'insensitive',
+            },
           },
-        },
-      ]
+        ],
       }),
 
       ...(filters.remote !== undefined && {
@@ -267,61 +233,49 @@ async getFacets() {
       }),
 
       ...(postedAtFilter && {
-
-          postedAt: postedAtFilter,
-
+        postedAt: postedAtFilter,
       }),
 
       ...(filters.source && {
-
         source: filters.source,
-
       }),
 
       ...(filters.location && {
-
         location: {
-
           contains: filters.location,
 
-          mode: "insensitive",
-
+          mode: 'insensitive',
         },
-
       }),
 
       ...(filters.experience && {
-
         experienceLevel: filters.experience,
-
       }),
     };
 
-    const total =
-      await this.prisma.job.count({
-        where,
-      });
+    const total = await this.prisma.job.count({
+      where,
+    });
 
-    const jobs =
-      await this.prisma.job.findMany({
-        where,
+    const jobs = await this.prisma.job.findMany({
+      where,
 
-        skip: (page - 1) * limit,
+      skip: (page - 1) * limit,
 
-        take: limit,
+      take: limit,
 
-        orderBy: [
-           {
-            score: "desc",
-          },
-          {
-            postedAt: 'desc',
-          },
-          {
-            createdAt: 'desc',
-          },
-        ],
-      });
+      orderBy: [
+        {
+          score: 'desc',
+        },
+        {
+          postedAt: 'desc',
+        },
+        {
+          createdAt: 'desc',
+        },
+      ],
+    });
 
     return {
       jobs,
@@ -332,37 +286,26 @@ async getFacets() {
     };
   }
 
-  async updateStatus(
-  id: string,
-  status: JobStatus,
-) {
+  async updateStatus(id: string, status: JobStatus) {
+    const data: any = {
+      status,
+    };
 
-  const data: any = {
-    status,
-  };
+    if (status === JobStatus.APPLIED) {
+      data.appliedAt = new Date();
+    }
 
-  if (status === JobStatus.APPLIED) {
-    data.appliedAt = new Date();
+    return this.prisma.job.update({
+      where: {
+        id,
+      },
+
+      data,
+    });
   }
 
-  return this.prisma.job.update({
-
-    where: {
-      id,
-    },
-
-    data,
-
-  });
-
-}
-
-async exists(
-  source: string,
-  externalJobId: string,
-): Promise<boolean> {
-  const job =
-    await this.prisma.job.findUnique({
+  async exists(source: string, externalJobId: string): Promise<boolean> {
+    const job = await this.prisma.job.findUnique({
       where: {
         source_externalJobId: {
           source,
@@ -374,6 +317,6 @@ async exists(
       },
     });
 
-  return !!job;
-}
+    return !!job;
+  }
 }

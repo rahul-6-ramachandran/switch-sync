@@ -82,42 +82,32 @@ export class WorkdayService extends BaseAdapter {
 
       for (const job of jobs) {
         stats.jobsSeen++;
-        this.logger.debug(
-          `[${company.name}] ${job.title}`,
-        );
+        this.logger.debug(`[${company.name}] ${job.title}`);
         const normalized = mapWorkdayJob(company, job);
 
-
-        
         if (!isRelevantJob(normalized.title)) {
-           stats.titleSkipped++;
+          stats.titleSkipped++;
           continue;
         }
 
         if (!isAllowedLocation(normalized.location)) {
-            stats.locationSkipped++;
+          stats.locationSkipped++;
           continue;
         }
 
-        const exists =
-          await this.jobsService.exists(
-            normalized.source,
-            normalized.externalJobId,
-          );
+        const exists = await this.jobsService.exists(
+          normalized.source,
+          normalized.externalJobId,
+        );
 
         if (exists) {
-
           this.logger.log(
             `${company.name} -> reached existing relevant job. Incremental sync complete.`,
           );
 
-          await this.companyService.updateLastSynced(
-            company.id,
-          );
+          await this.companyService.updateLastSynced(company.id);
 
-          this.logger.log(
-            `${company.name} completed`,
-          );
+          this.logger.log(`${company.name} completed`);
 
           stats.existing++;
 
@@ -174,7 +164,6 @@ export class WorkdayService extends BaseAdapter {
 
       page++;
       offset += PAGE_SIZE;
-
     }
 
     if (page > MAX_PAGES) {

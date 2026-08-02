@@ -1,39 +1,21 @@
 export const LOCATION_SCORES = [
   {
     score: 15,
-    keywords: [
-      "remote",
-      "work from home",
-      "wfh",
-      "anywhere",
-    ],
+    keywords: ['remote', 'work from home', 'wfh', 'anywhere'],
   },
 
   {
     score: 12,
-    keywords: [
-      "bangalore",
-      "bengaluru",
-      "kochi",
-    ],
+    keywords: ['bangalore', 'bengaluru', 'kochi'],
   },
 
   {
     score: 10,
-    keywords: [
-      "india",
-      "hyderabad",
-    ],
+    keywords: ['india', 'hyderabad'],
   },
 
   {
     score: 8,
-    keywords: [
-      "pune",
-      "chennai",
-      "gurgaon",
-      "noida",
-      "mumbai",
-    ],
+    keywords: ['pune', 'chennai', 'gurgaon', 'noida', 'mumbai'],
   },
 ];

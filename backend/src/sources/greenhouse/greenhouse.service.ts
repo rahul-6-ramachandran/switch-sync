@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 
-
 import { JobsService } from '../../jobs/jobs.service';
 import { isRelevantJob, isRemoteJob } from '../../helpers/helpers';
 import { isAllowedLocation } from '../../helpers/location-filters';
@@ -18,40 +17,31 @@ import { RateLimiterService } from '../../common/rate-limiter/rate-limiter.servi
 export class GreenhouseService extends BaseAdapter {
   readonly source = ATS.GREENHOUSE;
 
-
   constructor(
     private readonly jobsService: JobsService,
     private http: HttpService,
-      rateLimiter: RateLimiterService,
-   registry: AdapterRegistry
+    rateLimiter: RateLimiterService,
+    registry: AdapterRegistry,
   ) {
-    super(rateLimiter)
-       registry.register(this);
+    super(rateLimiter);
+    registry.register(this);
   }
 
-  protected async syncCompany(
-      company: Company,
-  ): Promise<void> {
-     const board = company.board!;
+  protected async syncCompany(company: Company): Promise<void> {
+    const board = company.board!;
 
     const companyName = company.name;
     try {
+      const url = `https://boards-api.greenhouse.io/v1/boards/${board}/jobs`;
 
-      const url =
-        `https://boards-api.greenhouse.io/v1/boards/${board}/jobs`;
-
-      const data =
-          await this.http.get<GreenhouseResponse>(url);
+      const data = await this.http.get<GreenhouseResponse>(url);
 
       let synced = 0;
 
       for (const job of data.jobs) {
-        
-        const location =
-        job.location?.name;
+        const location = job.location?.name;
 
-        
-      await this.jobsService.upsertJob({
+        await this.jobsService.upsertJob({
           source: this.source,
 
           externalJobId: String(job.id),
@@ -62,33 +52,23 @@ export class GreenhouseService extends BaseAdapter {
 
           location,
 
-          remoteStatus:
-              isRemoteJob(location),
+          remoteStatus: isRemoteJob(location),
 
-          applicationUrl:
-              job.absolute_url,
+          applicationUrl: job.absolute_url,
 
-          postedAt:
-              job.updated_at
-                  ? new Date(job.updated_at)
-                  : undefined,
-      });
+          postedAt: job.updated_at ? new Date(job.updated_at) : undefined,
+        });
 
         synced++;
       }
 
-     this.logger.log(
-  `${companyName}: ${synced}/${data.jobs.length} relevant jobs`,
-);
+      this.logger.log(
+        `${companyName}: ${synced}/${data.jobs.length} relevant jobs`,
+      );
     } catch (error) {
-      const message =
-                error instanceof Error
-                    ? error.message
-                    : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
 
-            this.logger.warn(
-                `${company.name}: ${message}`,
-            );
+      this.logger.warn(`${company.name}: ${message}`);
     }
   }
 }

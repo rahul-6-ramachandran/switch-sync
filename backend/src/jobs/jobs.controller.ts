@@ -1,31 +1,21 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Query } from '@nestjs/common';
 
 import { UpdateJobStatusDto } from './dto/update-job-status.dto';
 import { JobsService } from './jobs.service';
 
 @Controller('jobs')
 export class JobsController {
-  constructor(
-    private readonly jobsService: JobsService,
-  ) {}
-
+  constructor(private readonly jobsService: JobsService) {}
 
   @Get('summary')
-    getSummary() {
-      return this.jobsService.getSummary();
-    }
+  getSummary() {
+    return this.jobsService.getSummary();
+  }
 
-    @Get('facets')
-    getFacets() {
-      return this.jobsService.getFacets();
-    }
+  @Get('facets')
+  getFacets() {
+    return this.jobsService.getFacets();
+  }
 
   @Get()
   async findAll(
@@ -39,16 +29,16 @@ export class JobsController {
 
     @Query('limit') limit = '20',
 
-    @Query("source")
+    @Query('source')
     source?: string,
 
-    @Query("location")
+    @Query('location')
     location?: string,
 
-    @Query("postedWithinDays")
+    @Query('postedWithinDays')
     postedWithinDays?: string,
 
-     @Query("experience")
+    @Query('experience')
     experience?: string,
   ) {
     return this.jobsService.findAll({
@@ -56,10 +46,7 @@ export class JobsController {
 
       company,
 
-      remote:
-        remote !== undefined
-          ? remote === 'true'
-          : undefined,
+      remote: remote !== undefined ? remote === 'true' : undefined,
 
       page: Number(page),
 
@@ -69,31 +56,18 @@ export class JobsController {
 
       location,
 
-      experience:
-        experience !== undefined
-          ? experience
-          : undefined,
+      experience: experience !== undefined ? experience : undefined,
 
-      postedWithinDays:
-          postedWithinDays
-              ? Number(postedWithinDays)
-              : undefined,
+      postedWithinDays: postedWithinDays ? Number(postedWithinDays) : undefined,
     });
   }
 
-  @Patch(":id/status")
-async updateStatus(
+  @Patch(':id/status')
+  async updateStatus(
+    @Param('id') id: string,
 
-  @Param("id") id: string,
-
-  @Body() dto: UpdateJobStatusDto,
-
-) {
-
-  return this.jobsService.updateStatus(
-    id,
-    dto.status,
-  );
-
-}
+    @Body() dto: UpdateJobStatusDto,
+  ) {
+    return this.jobsService.updateStatus(id, dto.status);
+  }
 }

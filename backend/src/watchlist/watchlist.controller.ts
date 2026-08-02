@@ -1,19 +1,10 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Delete,
-  Param,
-  Body,
-} from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
 
 import { WatchlistService } from './watchlist.service';
 
 @Controller('watchlist')
 export class WatchlistController {
-  constructor(
-    private readonly watchlistService: WatchlistService,
-  ) {}
+  constructor(private readonly watchlistService: WatchlistService) {}
 
   @Get()
   findAll() {
@@ -28,16 +19,11 @@ export class WatchlistController {
       priority: number;
     },
   ) {
-    return this.watchlistService.create(
-      body.companyName,
-      body.priority,
-    );
+    return this.watchlistService.create(body.companyName, body.priority);
   }
 
   @Delete(':id')
-  delete(
-    @Param('id') id: string,
-  ) {
+  delete(@Param('id') id: string) {
     return this.watchlistService.delete(id);
   }
 }

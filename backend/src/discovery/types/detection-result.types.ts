@@ -5,19 +5,17 @@ export interface DetectionResult {
   detectedFrom: string;
 }
 export interface DiscoveryContext {
+  url: string;
 
-    url: string;
+  finalUrl: string;
 
-    finalUrl: string;
+  html: string;
 
-    html: string;
+  headers: Record<string, string>;
 
-    headers: Record<string, string>;
+  inlineScripts: string[];
 
-    inlineScripts: string[];
+  externalScripts: string[];
 
-    externalScripts: string[];
-
-    metaTags: Record<string,string>;
-
+  metaTags: Record<string, string>;
 }

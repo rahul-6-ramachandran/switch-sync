@@ -1,22 +1,16 @@
 import { Controller, Get } from '@nestjs/common';
 import { CareerService } from './career.service';
 
-@Controller("career")
+@Controller('career')
 export class CareerController {
+  constructor(private readonly careerService: CareerService) {}
 
-    constructor(
-        private readonly careerService: CareerService,
-    ) {}
+  @Get('sync')
+  async sync() {
+    await this.careerService.discoverAll();
 
-    @Get("sync")
-    async sync() {
-
-        await this.careerService.discoverAll();
-
-        return {
-            success: true,
-        };
-
-    }
-
+    return {
+      success: true,
+    };
+  }
 }

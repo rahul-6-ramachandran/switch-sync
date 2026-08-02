@@ -3,6 +3,6 @@ import { TelegramService } from './telegram/telegram.service';
 
 @Module({
   providers: [TelegramService],
-  exports: [TelegramService]
+  exports: [TelegramService],
 })
 export class NotificationsModule {}

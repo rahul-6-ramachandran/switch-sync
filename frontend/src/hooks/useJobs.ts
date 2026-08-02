@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
-import { fetchJobs } from '@/api/jobs'
-import type { JobFilters } from '@/types/job'
+import { useQuery } from "@tanstack/react-query";
+import { fetchJobs } from "@/api/jobs";
+import type { JobFilters } from "@/types/job";
 
 export function useJobs(filters: JobFilters) {
   return useQuery({
     queryKey: [
-      'jobs',
+      "jobs",
       {
         page: filters.page,
         pageSize: filters.pageSize,
@@ -20,5 +20,5 @@ export function useJobs(filters: JobFilters) {
     queryFn: () => fetchJobs(filters),
     placeholderData: (previousData) => previousData,
     staleTime: 30_000,
-  })
+  });
 }

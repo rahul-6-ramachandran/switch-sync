@@ -1,26 +1,16 @@
-import { Controller, Get } from "@nestjs/common";
-import { HomepageService } from "./homepage.service";
+import { Controller, Get } from '@nestjs/common';
+import { HomepageService } from './homepage.service';
 
-@Controller("homepage")
+@Controller('homepage')
 export class HomepageController {
+  constructor(private readonly homepageService: HomepageService) {}
 
-  constructor(
-
-    private readonly homepageService: HomepageService,
-
-  ) {}
-
-  @Get("sync")
+  @Get('sync')
   async sync() {
-
     await this.homepageService.discoverAll();
 
     return {
-
       success: true,
-
     };
-
   }
-
 }

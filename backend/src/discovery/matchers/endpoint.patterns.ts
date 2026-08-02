@@ -1,5 +1,4 @@
 export const ENDPOINT_PATTERNS: RegExp[] = [
-
   // Generic APIs
   /\/api\/[a-zA-Z0-9/_-]*/gi,
 
@@ -20,5 +19,4 @@ export const ENDPOINT_PATTERNS: RegExp[] = [
 
   // Posting
   /\/jobPosting\/?[a-zA-Z0-9/_-]*/gi,
-
 ];

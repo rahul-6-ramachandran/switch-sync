@@ -1,6 +1,5 @@
 export type LeverResponse = LeverJob[];
 
-
 export interface LeverJob {
   id: string;
 

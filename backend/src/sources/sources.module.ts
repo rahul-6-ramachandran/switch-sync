@@ -17,9 +17,31 @@ import { WorkdayDetailService } from './workday/workday-detail-service';
 import { CompanyModule } from '../company/company.module';
 
 @Module({
-  imports: [JobsModule, HttpModule, HtmlModule,CompanyModule, CommonModule, forwardRef(() => EngineModule)],
-  providers: [AdapterRegistry, GreenhouseService, LeverService, AshbyService,WorkdayService,SmartRecruitersService, WorkdayDetailService,],
-  exports: [AdapterRegistry, GreenhouseService, LeverService, AshbyService, WorkdayService, SmartRecruitersService, ],
+  imports: [
+    JobsModule,
+    HttpModule,
+    HtmlModule,
+    CompanyModule,
+    CommonModule,
+    forwardRef(() => EngineModule),
+  ],
+  providers: [
+    AdapterRegistry,
+    GreenhouseService,
+    LeverService,
+    AshbyService,
+    WorkdayService,
+    SmartRecruitersService,
+    WorkdayDetailService,
+  ],
+  exports: [
+    AdapterRegistry,
+    GreenhouseService,
+    LeverService,
+    AshbyService,
+    WorkdayService,
+    SmartRecruitersService,
+  ],
   controllers: [EngineController],
 })
 export class SourcesModule {}

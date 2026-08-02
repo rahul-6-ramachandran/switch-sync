@@ -7,7 +7,7 @@ import { NotificationsModule } from '../notifications/notifications.module';
 import { RankingModule } from '../ranking/ranking.module';
 
 @Module({
- imports: [PrismaModule, NotificationsModule,RankingModule],
+  imports: [PrismaModule, NotificationsModule, RankingModule],
   controllers: [JobsController],
   providers: [JobsService],
   exports: [JobsService],

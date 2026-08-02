@@ -1,28 +1,48 @@
-import { Briefcase, Globe, Building2, Radio } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { formatNumber } from '@/utils/format'
-import type { JobSummary } from '@/types/job'
-import type { LucideIcon } from 'lucide-react'
+import { Briefcase, Globe, Building2, Radio } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { formatNumber } from "@/utils/format";
+import type { JobSummary } from "@/types/job";
+import type { LucideIcon } from "lucide-react";
 
 interface SummaryCardsProps {
-  summary?: JobSummary
-  isLoading: boolean
+  summary?: JobSummary;
+  isLoading: boolean;
 }
 
 interface StatDef {
-  key: keyof JobSummary
-  label: string
-  icon: LucideIcon
-  accent: string
+  key: keyof JobSummary;
+  label: string;
+  icon: LucideIcon;
+  accent: string;
 }
 
 const STATS: StatDef[] = [
-  { key: 'totalJobs', label: 'Total jobs', icon: Briefcase, accent: 'var(--color-accent)' },
-  { key: 'remoteJobs', label: 'Remote jobs', icon: Globe, accent: 'var(--color-signal-strong)' },
-  { key: 'companies', label: 'Companies', icon: Building2, accent: 'var(--color-signal-mid)' },
-  { key: 'sources', label: 'Sources', icon: Radio, accent: 'var(--color-text-secondary)' },
-]
+  {
+    key: "totalJobs",
+    label: "Total jobs",
+    icon: Briefcase,
+    accent: "var(--color-accent)",
+  },
+  {
+    key: "remoteJobs",
+    label: "Remote jobs",
+    icon: Globe,
+    accent: "var(--color-signal-strong)",
+  },
+  {
+    key: "companies",
+    label: "Companies",
+    icon: Building2,
+    accent: "var(--color-signal-mid)",
+  },
+  {
+    key: "sources",
+    label: "Sources",
+    icon: Radio,
+    accent: "var(--color-text-secondary)",
+  },
+];
 
 export function SummaryCards({ summary, isLoading }: SummaryCardsProps) {
   return (
@@ -52,5 +72,5 @@ export function SummaryCards({ summary, isLoading }: SummaryCardsProps) {
         </Card>
       ))}
     </div>
-  )
+  );
 }

@@ -5,18 +5,13 @@ export const validationSchema = Joi.object({
     .valid('development', 'production', 'test')
     .default('development'),
 
-  PORT: Joi.number()
-    .default(3000),
+  PORT: Joi.number().default(3000),
 
-  DATABASE_URL: Joi.string()
-    .required(),
+  DATABASE_URL: Joi.string().required(),
 
-  TELEGRAM_BOT_TOKEN: Joi.string()
-    .required(),
+  TELEGRAM_BOT_TOKEN: Joi.string().required(),
 
-  TELEGRAM_CHAT_ID: Joi.string()
-    .required(),
+  TELEGRAM_CHAT_ID: Joi.string().required(),
 
-  FRONTEND_URL: Joi.string()
-    .default('http://localhost:5173'),
+  FRONTEND_URL: Joi.string().default('http://localhost:5173'),
 });

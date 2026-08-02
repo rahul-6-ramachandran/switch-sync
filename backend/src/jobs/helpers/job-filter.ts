@@ -1,10 +1,7 @@
-import { isRelevantJob, isTargetLocation } from "../../helpers/helpers";
-import { isAllowedLocation } from "../../helpers/location-filters";
-import { NormalizedJob } from "../interfaces/normalized-jobs.interface";
-export function shouldSaveJob(
-  job: NormalizedJob,
-): boolean {
-
+import { isRelevantJob, isTargetLocation } from '../../helpers/helpers';
+import { isAllowedLocation } from '../../helpers/location-filters';
+import { NormalizedJob } from '../interfaces/normalized-jobs.interface';
+export function shouldSaveJob(job: NormalizedJob): boolean {
   if (!isRelevantJob(job.title)) {
     return false;
   }
@@ -13,11 +10,8 @@ export function shouldSaveJob(
     return false;
   }
 
-  if (
-    job.experienceMin != null &&
-    job.experienceMin > 3
-  ) {
-      return false;
+  if (job.experienceMin != null && job.experienceMin > 3) {
+    return false;
   }
   return true;
 }

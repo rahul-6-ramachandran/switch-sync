@@ -1,23 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { AtsDetector } from '../../sources/interfaces/detector.interface';
-import { DetectionResult, DiscoveryContext } from '../types/detection-result.types';
+import {
+  DetectionResult,
+  DiscoveryContext,
+} from '../types/detection-result.types';
 import { DetectorRegistry } from '../../sources/registry/detector.registry';
 
 @Injectable()
-export class GreenhouseDetector
-  implements AtsDetector
-{
+export class GreenhouseDetector implements AtsDetector {
   name = 'greenhouse';
 
-   constructor(
-    registry: DetectorRegistry,
-  ) {
+  constructor(registry: DetectorRegistry) {
     registry.register(this);
   }
 
-  async detect(
-    context: DiscoveryContext,
-  ): Promise<DetectionResult | null> {
+  async detect(context: DiscoveryContext): Promise<DetectionResult | null> {
     const patterns = [
       /boards\.greenhouse\.io\/([a-zA-Z0-9_-]+)/i,
       /job-boards\.greenhouse\.io\/([a-zA-Z0-9_-]+)/i,

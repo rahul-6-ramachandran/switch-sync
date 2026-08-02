@@ -2,7 +2,6 @@ export interface GreenhouseResponse {
   jobs: GreenhouseJob[];
 }
 
-
 export interface GreenhouseJob {
   id: number;
   title: string;

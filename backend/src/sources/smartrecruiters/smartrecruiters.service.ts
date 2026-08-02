@@ -1,27 +1,26 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { Company } from "@prisma/client";
+import { Injectable, Logger } from '@nestjs/common';
+import { Company } from '@prisma/client';
 
-import { ATS } from "../../../constants";
-import { HtmlService } from "../../common/html/html.service";
-import { HttpService } from "../../common/http/http.service";
-import { JobsService } from "../../jobs/jobs.service";
-import { isRelevantJob } from "../../helpers/helpers";
-import { BaseAdapter } from "../base/base.adapter";
-import { AdapterRegistry } from "../registry/adapter.registry";
-import { RateLimiterService } from "../../common/rate-limiter/rate-limiter.service";
+import { ATS } from '../../../constants';
+import { HtmlService } from '../../common/html/html.service';
+import { HttpService } from '../../common/http/http.service';
+import { JobsService } from '../../jobs/jobs.service';
+import { isRelevantJob } from '../../helpers/helpers';
+import { BaseAdapter } from '../base/base.adapter';
+import { AdapterRegistry } from '../registry/adapter.registry';
+import { RateLimiterService } from '../../common/rate-limiter/rate-limiter.service';
 
 @Injectable()
 export class SmartRecruitersService extends BaseAdapter {
   readonly source = ATS.SMART_RECRUITERS;
 
-  protected readonly logger =
-    new Logger(SmartRecruitersService.name);
+  protected readonly logger = new Logger(SmartRecruitersService.name);
 
   constructor(
     private readonly http: HttpService,
     private readonly html: HtmlService,
     private readonly jobsService: JobsService,
-    rateLimiter : RateLimiterService,
+    rateLimiter: RateLimiterService,
     registry: AdapterRegistry,
   ) {
     super(rateLimiter);
@@ -29,53 +28,34 @@ export class SmartRecruitersService extends BaseAdapter {
     registry.register(this);
   }
 
-  protected async syncCompany(
-    company: Company,
-  ): Promise<void> {
-
+  protected async syncCompany(company: Company): Promise<void> {
     try {
+      const url = `https://careers.smartrecruiters.com/${company.board}`;
 
-      const url =
-        `https://careers.smartrecruiters.com/${company.board}`;
+      const html = await this.http.get<string>(url);
 
-      const html =
-        await this.http.get<string>(url);
+      const $ = this.html.load(html);
 
-      const $ =
-        this.html.load(html);
-
-      const jobElements =
-        $(".opening-job");
+      const jobElements = $('.opening-job');
 
       let synced = 0;
 
       for (const element of jobElements.toArray()) {
-
-        const title =
-          $(element)
-            .find(".job-title")
-            .text()
-            .trim();
+        const title = $(element).find('.job-title').text().trim();
 
         if (!title) {
           continue;
         }
 
-     this.logger.debug(title);
+        this.logger.debug(title);
 
-      
-
-        const href =
-          $(element)
-            .find("a")
-            .attr("href");
+        const href = $(element).find('a').attr('href');
 
         if (!href) {
           continue;
         }
 
         await this.jobsService.upsertJob({
-
           source: this.source,
 
           externalJobId: href,
@@ -89,7 +69,6 @@ export class SmartRecruitersService extends BaseAdapter {
           location: undefined,
           remoteStatus: false,
           postedAt: undefined,
-
         });
 
         synced++;
@@ -98,18 +77,10 @@ export class SmartRecruitersService extends BaseAdapter {
       this.logger.log(
         `${company.name}: ${synced}/${jobElements.length} jobs synced`,
       );
-
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
 
-      const message =
-                error instanceof Error
-                    ? error.message
-                    : "Unknown error";
-
-            this.logger.warn(
-                `${company.name}: ${message}`,
-            );
-
+      this.logger.warn(`${company.name}: ${message}`);
     }
   }
 }

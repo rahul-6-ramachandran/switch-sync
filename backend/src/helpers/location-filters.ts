@@ -1,5 +1,5 @@
 export const isAllowedLocation = (location?: string | null): boolean => {
-  if (!location) return true; 
+  if (!location) return true;
   const l = location.toLowerCase();
 
   const isRemote =

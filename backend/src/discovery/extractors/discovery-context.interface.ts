@@ -17,7 +17,7 @@ export interface DiscoveryContext {
   /**
    * Response headers.
    */
-headers: Record<string, unknown>;
+  headers: Record<string, unknown>;
 
   /**
    * Inline <script> contents.

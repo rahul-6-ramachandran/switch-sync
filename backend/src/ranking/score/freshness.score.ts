@@ -1,14 +1,9 @@
-export function freshnessScore(
-  postedAt?: Date | null,
-): number {
-
+export function freshnessScore(postedAt?: Date | null): number {
   if (!postedAt) {
     return 0;
   }
 
-  const days =
-    (Date.now() - postedAt.getTime()) /
-    (1000 * 60 * 60 * 24);
+  const days = (Date.now() - postedAt.getTime()) / (1000 * 60 * 60 * 24);
 
   if (days <= 1) return 20;
 

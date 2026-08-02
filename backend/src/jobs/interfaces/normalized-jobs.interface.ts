@@ -1,4 +1,4 @@
-import { ExperienceLevel } from "../../helpers/experience-detector";
+import { ExperienceLevel } from '../../helpers/experience-detector';
 
 export interface NormalizedJob {
   source: string;
@@ -18,12 +18,12 @@ export interface NormalizedJob {
   postedAt?: Date;
 
   description?: string;
-    score?: number;
-    experienceLevel?: ExperienceLevel;
+  score?: number;
+  experienceLevel?: ExperienceLevel;
 
-    experienceMin?: number;
+  experienceMin?: number;
 
-experienceMax?: number;
+  experienceMax?: number;
 
-experienceText?: string;
+  experienceText?: string;
 }

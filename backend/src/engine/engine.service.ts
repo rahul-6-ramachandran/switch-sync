@@ -14,14 +14,14 @@ export class EngineService {
   constructor(
     private registry: AdapterRegistry,
     private readonly companyService: CompanyService,
-    private readonly jobService : JobsService
+    private readonly jobService: JobsService,
   ) {}
 
   getStatus() {
-  return {
-    running: this.isRunning,
-  };
-}
+    return {
+      running: this.isRunning,
+    };
+  }
 
   async syncSource(source: string) {
     const adapter = this.registry
@@ -84,9 +84,7 @@ export class EngineService {
       this.logger.log(`Adapters : ${adaptersProcessed}`);
       this.logger.log(`Companies : ${companiesProcessed}`);
 
-      this.logger.log(
-        `New Jobs : ${this.jobService.getRunCounter()}`,
-      );
+      this.logger.log(`New Jobs : ${this.jobService.getRunCounter()}`);
 
       const duration = ((Date.now() - started) / 1000).toFixed(2);
 

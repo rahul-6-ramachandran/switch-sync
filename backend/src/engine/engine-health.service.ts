@@ -1,39 +1,32 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 
 export class AdapterHealth {
+  source: string = '';
 
-    source: string = '';
+  companies = 0;
 
-    companies = 0;
+  jobsFetched = 0;
 
-    jobsFetched = 0;
+  inserted = 0;
 
-    inserted = 0;
+  filtered = 0;
 
-    filtered = 0;
+  failed = 0;
 
-    failed = 0;
+  lastRun = new Date();
 
-    lastRun = new Date();
-
-    duration = 0;
+  duration = 0;
 }
 
 @Injectable()
 export class EngineHealthService {
+  private readonly stats = new Map<string, AdapterHealth>();
 
-    private readonly stats =
-        new Map<string, AdapterHealth>();
+  update(source: string, health: AdapterHealth) {
+    this.stats.set(source, health);
+  }
 
-    update(
-        source: string,
-        health: AdapterHealth,
-    ) {
-        this.stats.set(source, health);
-    }
-
-    getAll() {
-        return [...this.stats.values()];
-    }
-
+  getAll() {
+    return [...this.stats.values()];
+  }
 }

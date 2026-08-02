@@ -1,16 +1,16 @@
-import { JobCard } from './JobCard'
-import { JobCardSkeleton } from './JobCardSkeleton'
-import { EmptyState } from './EmptyState'
-import type { Job } from '@/types/job'
+import { JobCard } from "./JobCard";
+import { JobCardSkeleton } from "./JobCardSkeleton";
+import { EmptyState } from "./EmptyState";
+import type { Job } from "@/types/job";
 
 interface JobGridProps {
-  jobs: Job[]
-  isLoading: boolean
-  isError: boolean
-  errorMessage?: string
-  hasActiveFilters: boolean
-  onClearFilters: () => void
-  onRetry: () => void
+  jobs: Job[];
+  isLoading: boolean;
+  isError: boolean;
+  errorMessage?: string;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
+  onRetry: () => void;
 }
 
 export function JobGrid({
@@ -26,11 +26,14 @@ export function JobGrid({
     return (
       <EmptyState
         title="Couldn't load jobs"
-        description={errorMessage ?? 'The request failed. Check your connection and try again.'}
+        description={
+          errorMessage ??
+          "The request failed. Check your connection and try again."
+        }
         actionLabel="Retry"
         onAction={onRetry}
       />
-    )
+    );
   }
 
   if (isLoading) {
@@ -40,7 +43,7 @@ export function JobGrid({
           <JobCardSkeleton key={index} />
         ))}
       </div>
-    )
+    );
   }
 
   if (jobs.length === 0) {
@@ -49,13 +52,13 @@ export function JobGrid({
         title="No jobs match your filters"
         description={
           hasActiveFilters
-            ? 'Try widening your search or clearing a few filters to see more results.'
-            : 'Nothing is on the radar yet. Check back soon as new postings come in.'
+            ? "Try widening your search or clearing a few filters to see more results."
+            : "Nothing is on the radar yet. Check back soon as new postings come in."
         }
-        actionLabel={hasActiveFilters ? 'Clear filters' : undefined}
+        actionLabel={hasActiveFilters ? "Clear filters" : undefined}
         onAction={hasActiveFilters ? onClearFilters : undefined}
       />
-    )
+    );
   }
 
   return (
@@ -64,5 +67,5 @@ export function JobGrid({
         <JobCard key={job.id} job={job} />
       ))}
     </div>
-  )
+  );
 }

@@ -1,9 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import {
-  Sparkles,
-  TrendingUp,
-  Crown,
-} from "lucide-react";
+import { Sparkles, TrendingUp, Crown } from "lucide-react";
 
 interface Props {
   level?: string | null;

@@ -3,9 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class WatchlistService {
-  constructor(
-    private readonly prisma: PrismaService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
     return this.prisma.watchlistCompany.findMany({
@@ -15,10 +13,7 @@ export class WatchlistService {
     });
   }
 
-  create(
-    companyName: string,
-    priority: number,
-  ) {
+  create(companyName: string, priority: number) {
     return this.prisma.watchlistCompany.create({
       data: {
         companyName,
@@ -35,15 +30,12 @@ export class WatchlistService {
     });
   }
 
-  async isWatchlisted(
-    companyName: string,
-  ): Promise<boolean> {
-    const company =
-      await this.prisma.watchlistCompany.findUnique({
-        where: {
-          companyName,
-        },
-      });
+  async isWatchlisted(companyName: string): Promise<boolean> {
+    const company = await this.prisma.watchlistCompany.findUnique({
+      where: {
+        companyName,
+      },
+    });
 
     return !!company;
   }

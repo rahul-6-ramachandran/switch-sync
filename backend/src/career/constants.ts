@@ -1,31 +1,29 @@
 export const CAREER_KEYWORDS = [
+  'career',
 
-  "career",
+  'careers',
 
-  "careers",
+  'jobs',
 
-  "jobs",
+  'job',
 
-  "job",
+  'join-us',
 
-  "join-us",
+  'joinus',
 
-  "joinus",
+  'join',
 
-  "join",
+  'work-with-us',
 
-  "work-with-us",
+  'workwithus',
 
-  "workwithus",
+  'open-positions',
 
-  "open-positions",
+  'positions',
 
-  "positions",
+  'opportunities',
 
-  "opportunities",
+  'employment',
 
-  "employment",
-
-  "hiring",
-
+  'hiring',
 ];

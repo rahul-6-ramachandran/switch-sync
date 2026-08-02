@@ -1,7 +1,5 @@
 export interface ExperienceRange {
+  min?: number;
 
-    min?: number;
-
-    max?: number;
-
+  max?: number;
 }

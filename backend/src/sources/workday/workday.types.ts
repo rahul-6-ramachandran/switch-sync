@@ -17,7 +17,6 @@ export interface WorkdayJob {
   bulletFields?: string[];
 }
 
-
 export interface WorkdayDetailResponse {
   jobPostingInfo: {
     jobDescription: string;

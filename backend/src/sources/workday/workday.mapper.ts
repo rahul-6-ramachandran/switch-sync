@@ -1,87 +1,63 @@
-import { Company } from "@prisma/client";
+import { Company } from '@prisma/client';
 
-import { WorkdayJob } from "./workday.types";
-import { NormalizedJob } from "../../jobs/interfaces/normalized-jobs.interface";
-import { isRemoteJob } from "../../helpers/helpers";
-
-
-
+import { WorkdayJob } from './workday.types';
+import { NormalizedJob } from '../../jobs/interfaces/normalized-jobs.interface';
+import { isRemoteJob } from '../../helpers/helpers';
 
 export function mapWorkdayJob(
   company: Company,
   job: WorkdayJob,
 ): NormalizedJob {
-
-
-
   return {
-
     source: company.ats,
 
-    externalJobId:
-      job.bulletFields?.[0] ??
-      job.externalPath,
+    externalJobId: job.bulletFields?.[0] ?? job.externalPath,
 
     companyName: company.name,
 
     title: job.title,
 
-    applicationUrl:
-    buildApplicationUrl(
-        company?.applyBaseUrl,
-        job.externalPath,
+    applicationUrl: buildApplicationUrl(
+      company?.applyBaseUrl,
+      job.externalPath,
     ),
 
-    location:
-      job.locationsText,
+    location: job.locationsText,
 
-    remoteStatus:
-    isRemoteJob(job.locationsText),
+    remoteStatus: isRemoteJob(job.locationsText),
 
-    postedAt:
-      parsePostedDate(job.postedOn),
+    postedAt: parsePostedDate(job.postedOn),
 
     description: undefined,
 
-     experienceMin: undefined,
+    experienceMin: undefined,
     experienceMax: undefined,
     experienceText: undefined,
   };
 }
 
-function parsePostedDate(
-  value?: string | null,
-): Date | undefined {
+function parsePostedDate(value?: string | null): Date | undefined {
+  if (!value) return undefined;
 
-  if (!value)
-    return undefined;
+  const lower = value.toLowerCase();
 
-  const lower =
-    value.toLowerCase();
+  const today = new Date();
 
-  const today =
-    new Date();
-
-  if (lower.includes("today")) {
+  if (lower.includes('today')) {
     return today;
   }
 
-  if (lower.includes("yesterday")) {
+  if (lower.includes('yesterday')) {
     today.setDate(today.getDate() - 1);
     return today;
   }
 
-  const match =
-    lower.match(/(\d+)/);
+  const match = lower.match(/(\d+)/);
 
   if (match) {
+    const days = Number(match[1]);
 
-    const days =
-      Number(match[1]);
-
-    today.setDate(
-      today.getDate() - days,
-    );
+    today.setDate(today.getDate() - days);
 
     return today;
   }
@@ -89,21 +65,16 @@ function parsePostedDate(
   return undefined;
 }
 function buildApplicationUrl(
-    base?: string | null,
-    path?: string | null,
+  base?: string | null,
+  path?: string | null,
 ): string {
+  if (!base || !path) {
+    return '';
+  }
 
-    if (!base || !path) {
-        return "";
-    }
+  const cleanBase = base.replace(/\/$/, '');
 
-    const cleanBase =
-        base.replace(/\/$/, "");
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
 
-    const cleanPath =
-        path.startsWith("/")
-            ? path
-            : `/${path}`;
-
-    return cleanBase + cleanPath;
+  return cleanBase + cleanPath;
 }

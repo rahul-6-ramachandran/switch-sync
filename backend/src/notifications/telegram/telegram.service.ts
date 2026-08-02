@@ -7,16 +7,16 @@ import TelegramBot from 'node-telegram-bot-api';
 export class TelegramService {
   private readonly bot: TelegramBot;
 
-  constructor(  private readonly configService: ConfigService) {
-        this.bot = new TelegramBot(
-         this.configService.getOrThrow<string>('TELEGRAM_BOT_TOKEN'),
-      
-        {
-            polling: false,
-        },
-        );
-    }
-    async sendNewJob(job: Job) {
+  constructor(private readonly configService: ConfigService) {
+    this.bot = new TelegramBot(
+      this.configService.getOrThrow<string>('TELEGRAM_BOT_TOKEN'),
+
+      {
+        polling: false,
+      },
+    );
+  }
+  async sendNewJob(job: Job) {
     const message = `
     🚀 <b>New Job Found!</b>
 
@@ -26,7 +26,7 @@ export class TelegramService {
 
     📍 <b>Location:</b> ${job.location}
 
-    🌍 <b>Remote:</b> ${job.remoteStatus ? "❌" : "✅"}
+    🌍 <b>Remote:</b> ${job.remoteStatus ? '❌' : '✅'}
 
      <b>Source:</b> ${job.source}
 
@@ -38,11 +38,11 @@ export class TelegramService {
     `;
 
     await this.bot.sendMessage(
-           this.configService.getOrThrow<string>('TELEGRAM_CHAT_ID'),
-        message,
-        {
-        parse_mode: "HTML"
-        },
+      this.configService.getOrThrow<string>('TELEGRAM_CHAT_ID'),
+      message,
+      {
+        parse_mode: 'HTML',
+      },
     );
-    }
+  }
 }

@@ -7,9 +7,7 @@ import csv from 'csv-parser';
 export class CompanyImportService {
   private readonly logger = new Logger(CompanyImportService.name);
 
-  constructor(
-    private readonly prisma: PrismaService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async importCompanies() {
     const companies: any[] = [];
@@ -23,12 +21,11 @@ export class CompanyImportService {
           let updated = 0;
 
           for (const row of companies) {
-            const existing =
-              await this.prisma.company.findUnique({
-                where: {
-                  name: row.Company.trim(),
-                },
-              });
+            const existing = await this.prisma.company.findUnique({
+              where: {
+                name: row.Company.trim(),
+              },
+            });
 
             await this.prisma.company.upsert({
               where: {
@@ -62,9 +59,7 @@ export class CompanyImportService {
             }
           }
 
-          this.logger.log(
-            `Imported: ${inserted}, Updated: ${updated}`,
-          );
+          this.logger.log(`Imported: ${inserted}, Updated: ${updated}`);
 
           resolve(true);
         })

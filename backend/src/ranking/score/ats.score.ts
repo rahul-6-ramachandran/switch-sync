@@ -1,11 +1,7 @@
-import { ATS } from "../../common/constants/ats";
+import { ATS } from '../../common/constants/ats';
 
-export function atsScore(
-  source: string,
-): number {
-
+export function atsScore(source: string): number {
   switch (source) {
-
     case ATS.GREENHOUSE:
       return 5;
 
@@ -24,5 +20,4 @@ export function atsScore(
     default:
       return 0;
   }
-
 }

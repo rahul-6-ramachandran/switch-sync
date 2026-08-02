@@ -1,10 +1,10 @@
-import { Search } from 'lucide-react'
-import { RadarMark } from './RadarMark'
-import { Input } from '@/components/ui/input'
+import { Search } from "lucide-react";
+import { RadarMark } from "./RadarMark";
+import { Input } from "@/components/ui/input";
 
 interface HeaderProps {
-  search: string
-  onSearchChange: (value: string) => void
+  search: string;
+  onSearchChange: (value: string) => void;
 }
 
 export function Header({ search, onSearchChange }: HeaderProps) {
@@ -31,10 +31,13 @@ export function Header({ search, onSearchChange }: HeaderProps) {
 
         <div className="hidden items-center gap-1.5 text-xs text-[var(--color-text-muted)] sm:flex">
           <span className="rounded border border-[var(--color-border)] px-1.5 py-0.5 font-mono">
-            {new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+            {new Date().toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+            })}
           </span>
         </div>
       </div>
     </header>
-  )
+  );
 }

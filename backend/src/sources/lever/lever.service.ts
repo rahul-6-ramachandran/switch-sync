@@ -4,7 +4,7 @@ import axios from 'axios';
 import { JobsService } from '../../jobs/jobs.service';
 
 import { leverCompanies } from './companies';
-import {  isRemoteJob } from '../../helpers/helpers';
+import { isRemoteJob } from '../../helpers/helpers';
 import { isAllowedLocation } from '../../helpers/location-filters';
 import { JobSourceAdapter } from '../interfaces/job-source.interface';
 import { AdapterRegistry } from '../registry/adapter.registry';
@@ -15,39 +15,33 @@ import { ATS } from '../../common/constants/ats';
 import { Company } from '@prisma/client';
 import { RateLimiterService } from '../../common/rate-limiter/rate-limiter.service';
 
-
 @Injectable()
 export class LeverService extends BaseAdapter {
-  readonly source = ATS.LEVER
+  readonly source = ATS.LEVER;
 
   constructor(
     private readonly jobsService: JobsService,
     private readonly registry: AdapterRegistry,
-    rateLimiter : RateLimiterService,
-        private http: HttpService,
+    rateLimiter: RateLimiterService,
+    private http: HttpService,
   ) {
-    super(rateLimiter)
-    this.registry.register(this)
+    super(rateLimiter);
+    this.registry.register(this);
   }
 
-protected async syncCompany(
-    company: Company
-): Promise<void> {
-  const board = company.board!;
+  protected async syncCompany(company: Company): Promise<void> {
+    const board = company.board!;
 
     const companyName = company.name;
     try {
-      const url =
-        `https://api.lever.co/v0/postings/${board}?mode=json`;
+      const url = `https://api.lever.co/v0/postings/${board}?mode=json`;
 
       const data = await this.http.get<LeverResponse>(url);
 
       let synced = 0;
 
       for (const job of data) {
-        const location =
-          job.categories?.location ?? null;
-
+        const location = job.categories?.location ?? null;
 
         await this.jobsService.upsertJob({
           source: 'lever',
@@ -60,11 +54,9 @@ protected async syncCompany(
 
           location,
 
-          remoteStatus:
-            isRemoteJob(location),
+          remoteStatus: isRemoteJob(location),
 
-          applicationUrl:
-            job.hostedUrl,
+          applicationUrl: job.hostedUrl,
 
           postedAt: new Date(),
         });
@@ -72,18 +64,11 @@ protected async syncCompany(
         synced++;
       }
 
-      this.logger.log(
-        `${companyName}: ${synced} jobs synced`,
-      );
+      this.logger.log(`${companyName}: ${synced} jobs synced`);
     } catch (error: any) {
-      const message =
-                error instanceof Error
-                    ? error.message
-                    : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
 
-            this.logger.warn(
-                `${company.name}: ${message}`,
-            );
+      this.logger.warn(`${company.name}: ${message}`);
     }
   }
 }
