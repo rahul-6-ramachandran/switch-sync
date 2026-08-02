@@ -15,6 +15,12 @@ export class EngineService {
     private readonly companyService: CompanyService,
   ) {}
 
+  getStatus() {
+  return {
+    running: this.isRunning,
+  };
+}
+
   async syncSource(source: string) {
     const adapter = this.registry
       .getAdapters()

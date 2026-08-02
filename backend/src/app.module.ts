@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { validationSchema } from './config/validation';
+import { HealthModule } from './health/health.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
@@ -22,7 +23,7 @@ import { CommonModule } from './common/common.module';
     isGlobal: true,
     envFilePath: '.env',
       validationSchema,
-  }),ScheduleModule.forRoot(), PrismaModule, JobsModule, SourcesModule,  WatchlistModule, CompanyModule, EngineModule, HttpModule, NotificationsModule, DiscoveryModule, HomepageModule, CareerModule, CommonModule],
+  }),ScheduleModule.forRoot(),  HealthModule, PrismaModule, JobsModule, SourcesModule,  WatchlistModule, CompanyModule, EngineModule, HttpModule, NotificationsModule, DiscoveryModule, HomepageModule, CareerModule, CommonModule],
   controllers: [AppController],
   providers: [AppService],
 })
