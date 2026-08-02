@@ -12,7 +12,7 @@ async function bootstrap() {
     credentials: true,
   });
 
-  const port = configService.getOrThrow<number>('PORT');
+  const port = configService.getOrThrow<number>('PORT') ?? 3000;
 
   await app.listen(port);
 
