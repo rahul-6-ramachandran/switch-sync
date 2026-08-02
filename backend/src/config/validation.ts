@@ -1,0 +1,22 @@
+import * as Joi from 'joi';
+
+export const validationSchema = Joi.object({
+  NODE_ENV: Joi.string()
+    .valid('development', 'production', 'test')
+    .default('development'),
+
+  PORT: Joi.number()
+    .default(3000),
+
+  DATABASE_URL: Joi.string()
+    .required(),
+
+  TELEGRAM_BOT_TOKEN: Joi.string()
+    .required(),
+
+  TELEGRAM_CHAT_ID: Joi.string()
+    .required(),
+
+  FRONTEND_URL: Joi.string()
+    .default('http://localhost:5173'),
+});

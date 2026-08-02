@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { validationSchema } from './config/validation';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
@@ -20,6 +21,7 @@ import { CommonModule } from './common/common.module';
   imports: [ ConfigModule.forRoot({
     isGlobal: true,
     envFilePath: '.env',
+      validationSchema,
   }),ScheduleModule.forRoot(), PrismaModule, JobsModule, SourcesModule,  WatchlistModule, CompanyModule, EngineModule, HttpModule, NotificationsModule, DiscoveryModule, HomepageModule, CareerModule, CommonModule],
   controllers: [AppController],
   providers: [AppService],
