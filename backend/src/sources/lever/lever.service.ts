@@ -13,6 +13,7 @@ import { HttpService } from '../../common/http/http.service';
 import { LeverResponse } from '../../types/ats/lever.types';
 import { ATS } from '../../common/constants/ats';
 import { Company } from '@prisma/client';
+import { RateLimiterService } from '../../common/rate-limiter/rate-limiter.service';
 
 
 @Injectable()
@@ -22,9 +23,10 @@ export class LeverService extends BaseAdapter {
   constructor(
     private readonly jobsService: JobsService,
     private readonly registry: AdapterRegistry,
+    rateLimiter : RateLimiterService,
         private http: HttpService,
   ) {
-    super()
+    super(rateLimiter)
     this.registry.register(this)
   }
 

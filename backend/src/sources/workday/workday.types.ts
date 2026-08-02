@@ -18,3 +18,16 @@ export interface WorkdayJob {
 }
 
 
+export interface WorkdayDetailResponse {
+  jobPostingInfo: {
+    jobDescription: string;
+
+    externalUrl: string;
+
+    postedOn: string;
+
+    location: string;
+
+    title: string;
+  };
+}

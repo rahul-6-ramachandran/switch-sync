@@ -105,4 +105,25 @@ async findAll() {
     },
   });
 }
+
+
+async updateLastSynced(
+    id: string,
+) {
+
+    return this.prisma.company.update({
+
+        where: {
+            id,
+        },
+
+        data: {
+
+            lastSyncedAt: new Date(),
+
+        },
+
+    });
+
+}
 }

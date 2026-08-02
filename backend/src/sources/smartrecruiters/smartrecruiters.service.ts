@@ -8,6 +8,7 @@ import { JobsService } from "../../jobs/jobs.service";
 import { isRelevantJob } from "../../helpers/helpers";
 import { BaseAdapter } from "../base/base.adapter";
 import { AdapterRegistry } from "../registry/adapter.registry";
+import { RateLimiterService } from "../../common/rate-limiter/rate-limiter.service";
 
 @Injectable()
 export class SmartRecruitersService extends BaseAdapter {
@@ -20,9 +21,10 @@ export class SmartRecruitersService extends BaseAdapter {
     private readonly http: HttpService,
     private readonly html: HtmlService,
     private readonly jobsService: JobsService,
+    rateLimiter : RateLimiterService,
     registry: AdapterRegistry,
   ) {
-    super();
+    super(rateLimiter);
 
     registry.register(this);
   }

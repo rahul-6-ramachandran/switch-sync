@@ -7,6 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum JobStatus {
+  NEW
+  WISHLIST
+  APPLIED
+  INTERVIEW
+  OFFER
+  REJECTED
+  NOT_INTERESTED
+}
+
 model Job {
   id               String   @id @default(cuid())
 
@@ -19,7 +29,19 @@ model Job {
   location         String?
   employmentType   String?
 
+    
+  status JobStatus @default(NEW)
 
+  appliedAt DateTime?
+
+  statusUpdatedAt DateTime? @updatedAt
+
+  notes String?
+
+  experienceMin Int?
+experienceMax Int?
+
+experienceText String?
 
   experienceLevel String?
   score Int @default(0)

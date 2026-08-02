@@ -13,5 +13,11 @@ export function shouldSaveJob(
     return false;
   }
 
+  if (
+    job.experienceMin != null &&
+    job.experienceMin > 3
+  ) {
+      return false;
+  }
   return true;
 }

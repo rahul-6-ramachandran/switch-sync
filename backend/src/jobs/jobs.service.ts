@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { JobStatus, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { TelegramService } from '../notifications/telegram/telegram.service';
@@ -46,13 +46,38 @@ export class JobsService {
       });
 
     if (existing) {
-      return this.prisma.job.update({
-        where: {
-          id: existing.id,
-        },
-        data: job,
-      });
-    }
+
+  return this.prisma.job.update({
+
+    where: {
+      id: existing.id,
+    },
+
+    data: {
+
+      title: job.title,
+
+      companyName: job.companyName,
+
+      applicationUrl: job.applicationUrl,
+
+      location: job.location,
+
+      remoteStatus: job.remoteStatus,
+
+      postedAt: job.postedAt,
+
+      description: job.description,
+
+      score: job.score,
+
+      experienceLevel: job.experienceLevel,
+
+    },
+
+  });
+
+}
 
   
 
@@ -293,4 +318,49 @@ async getFacets() {
       totalPages: Math.ceil(total / limit),
     };
   }
+
+  async updateStatus(
+  id: string,
+  status: JobStatus,
+) {
+
+  const data: any = {
+    status,
+  };
+
+  if (status === JobStatus.APPLIED) {
+    data.appliedAt = new Date();
+  }
+
+  return this.prisma.job.update({
+
+    where: {
+      id,
+    },
+
+    data,
+
+  });
+
+}
+
+async exists(
+  source: string,
+  externalJobId: string,
+): Promise<boolean> {
+  const job =
+    await this.prisma.job.findUnique({
+      where: {
+        source_externalJobId: {
+          source,
+          externalJobId,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+  return !!job;
+}
 }

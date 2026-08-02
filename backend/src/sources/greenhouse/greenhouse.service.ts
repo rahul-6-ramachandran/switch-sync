@@ -12,6 +12,7 @@ import { HttpService } from '../../common/http/http.service';
 import { GreenhouseResponse } from '../../types/ats/greenhous.types';
 import { BaseAdapter } from '../base/base.adapter';
 import { ATS } from '../../common/constants/ats';
+import { RateLimiterService } from '../../common/rate-limiter/rate-limiter.service';
 
 @Injectable()
 export class GreenhouseService extends BaseAdapter {
@@ -21,10 +22,10 @@ export class GreenhouseService extends BaseAdapter {
   constructor(
     private readonly jobsService: JobsService,
     private http: HttpService,
-
+      rateLimiter: RateLimiterService,
    registry: AdapterRegistry
   ) {
-    super()
+    super(rateLimiter)
        registry.register(this);
   }
 

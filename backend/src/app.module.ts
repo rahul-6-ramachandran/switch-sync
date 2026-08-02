@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
@@ -13,9 +14,13 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { DiscoveryModule } from './discovery/discovery.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { CareerModule } from './career/career.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
-  imports: [PrismaModule, JobsModule, SourcesModule, ScheduleModule.forRoot(), WatchlistModule, CompanyModule, EngineModule, HttpModule, NotificationsModule, DiscoveryModule,AppModule, HomepageModule, CareerModule],
+  imports: [ ConfigModule.forRoot({
+    isGlobal: true,
+    envFilePath: '.env',
+  }),ScheduleModule.forRoot(), PrismaModule, JobsModule, SourcesModule,  WatchlistModule, CompanyModule, EngineModule, HttpModule, NotificationsModule, DiscoveryModule, HomepageModule, CareerModule, CommonModule],
   controllers: [AppController],
   providers: [AppService],
 })

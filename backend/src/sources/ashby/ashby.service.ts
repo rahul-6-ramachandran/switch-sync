@@ -18,6 +18,7 @@ import {
 } from "../../helpers/helpers";
 
 import { isAllowedLocation } from "../../helpers/location-filters";
+import { RateLimiterService } from "../../common/rate-limiter/rate-limiter.service";
 
 @Injectable()
 export class AshbyService extends BaseAdapter {
@@ -29,9 +30,10 @@ export class AshbyService extends BaseAdapter {
   constructor(
     private readonly jobsService: JobsService,
     private readonly http: HttpService,
+    rateLimiter : RateLimiterService,
     registry: AdapterRegistry,
   ) {
-    super();
+    super(rateLimiter);
     registry.register(this);
   }
 

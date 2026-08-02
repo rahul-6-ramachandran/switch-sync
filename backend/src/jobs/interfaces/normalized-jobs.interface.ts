@@ -20,4 +20,10 @@ export interface NormalizedJob {
   description?: string;
     score?: number;
     experienceLevel?: ExperienceLevel;
+
+    experienceMin?: number;
+
+experienceMax?: number;
+
+experienceText?: string;
 }

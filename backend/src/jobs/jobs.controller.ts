@@ -1,9 +1,13 @@
 import {
+  Body,
   Controller,
   Get,
+  Param,
+  Patch,
   Query,
 } from '@nestjs/common';
 
+import { UpdateJobStatusDto } from './dto/update-job-status.dto';
 import { JobsService } from './jobs.service';
 
 @Controller('jobs')
@@ -76,4 +80,20 @@ export class JobsController {
               : undefined,
     });
   }
+
+  @Patch(":id/status")
+async updateStatus(
+
+  @Param("id") id: string,
+
+  @Body() dto: UpdateJobStatusDto,
+
+) {
+
+  return this.jobsService.updateStatus(
+    id,
+    dto.status,
+  );
+
+}
 }

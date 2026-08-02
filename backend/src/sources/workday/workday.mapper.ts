@@ -42,6 +42,10 @@ export function mapWorkdayJob(
       parsePostedDate(job.postedOn),
 
     description: undefined,
+
+     experienceMin: undefined,
+    experienceMax: undefined,
+    experienceText: undefined,
   };
 }
 
