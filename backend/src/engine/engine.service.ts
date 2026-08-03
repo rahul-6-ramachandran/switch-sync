@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CompanyService } from '../company/company.service';
 import { GreenhouseService } from '../sources/greenhouse/greenhouse.service';
-import { Cron, CronExpression } from '@nestjs/schedule';
+
 import { JobSourceAdapter } from '../sources/interfaces/job-source.interface';
 import { AdapterRegistry } from '../sources/registry/adapter.registry';
 import { JobsService } from '../jobs/jobs.service';
@@ -37,7 +37,6 @@ export class EngineService {
     await adapter.sync(companies);
   }
 
-  @Cron(CronExpression.EVERY_HOUR)
   async sync() {
     if (this.isRunning) {
       this.logger.warn('Sync already running.');
