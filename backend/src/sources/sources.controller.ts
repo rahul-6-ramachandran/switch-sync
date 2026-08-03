@@ -1,25 +1,51 @@
-import { Controller, Get, Logger, Param } from '@nestjs/common';
+import { Controller, Get, Headers, Logger, Param, Post, UnauthorizedException } from '@nestjs/common';
 import { EngineService } from '../engine/engine.service';
 
 @Controller('engine')
 export class EngineController {
   constructor(private readonly engineService: EngineService) {}
 
-  @Get('sync')
-  async syncAll() {
-    await this.engineService.sync();
+  @Post('sync')
+  async syncAll( @Headers('authorization') authorization?: string,) {
+
+       const token =
+      authorization?.replace(
+        'Bearer ',
+        '',
+      );
+
+       if (token !== process.env.SYNC_SECRET) {
+      throw new UnauthorizedException();
+    }
+
+    void this.engineService.sync();
 
     return {
       success: true,
+      message: 'Sync started',
     };
   }
 
-  @Get('sync/:source')
-  async syncSource(@Param('source') source: string) {
-    await this.engineService.syncSource(source);
+  @Post('sync/:source')
+  async syncSource( 
+    @Param('source') source: string,
+    @Headers('authorization') authorization?: string,) {
 
-    return {
+      const token =
+      authorization?.replace(
+        'Bearer ',
+        '',
+      );
+
+      if (token !== process.env.SYNC_SECRET) {
+      throw new UnauthorizedException();
+    }
+
+    void this.engineService.syncSource(source);
+
+   return {
       success: true,
+      message: `${source} sync started`,
     };
   }
 }
