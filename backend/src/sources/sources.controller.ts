@@ -1,9 +1,12 @@
 import { Controller, Get, Headers, Logger, Param, Post, UnauthorizedException } from '@nestjs/common';
 import { EngineService } from '../engine/engine.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('engine')
 export class EngineController {
-  constructor(private readonly engineService: EngineService) {}
+  constructor(private readonly engineService: EngineService,
+     private readonly config: ConfigService,
+  ) {}
 
   @Post('sync')
   async syncAll( @Headers('authorization') authorization?: string,) {
@@ -14,7 +17,7 @@ export class EngineController {
         '',
       );
 
-       if (token !== process.env.SYNC_SECRET) {
+       if (token !== this.config.get('SYNC_SECRET')) {
       throw new UnauthorizedException();
     }
 
