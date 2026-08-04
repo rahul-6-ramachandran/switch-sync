@@ -3,7 +3,7 @@ name: HireScope Hourly Sync
 on:
   schedule:
     # Runs at the start of every hour
-    - cron: "0 * * * *"
+    - cron: "17 * * * *"
 
   # Allows you to manually run it from GitHub
   workflow_dispatch:
