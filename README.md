@@ -121,8 +121,7 @@ Today, HireScope automatically monitors hundreds of companies, intelligently fil
 
 ## Dashboard
 
-<img width="1605" height="190" alt="Screenshot From 2026-08-04 16-47-15" src="https://github.com/user-attachments/assets/5ea710f6-d118-4c4f-81ac-59719a4a9c93" />
-
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/de7d2f86-0026-4dfa-92f3-feae735c72be" />
 
 ---
 
