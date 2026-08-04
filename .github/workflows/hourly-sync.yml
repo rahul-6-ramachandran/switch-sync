@@ -15,6 +15,14 @@ jobs:
     steps:
       - name: Trigger HireScope Sync
         run: |
-          curl --fail --request POST \
+          echo "Starting HireScope sync..."
+
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --request POST \
             --header 'Authorization: Bearer ${{ secrets.SYNC_SECRET }}' \
             https://hirescope-backend-a9pu.onrender.com/engine/sync
+
+          echo "Sync request completed."
