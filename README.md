@@ -1,7 +1,7 @@
 <div align="center">
 
-#  HireScope
-
+#  HireScope 
+https://switch-sync.vercel.app/
 ### Discover engineering jobs directly from company ATS platforms — before they appear on traditional job boards.
 
 *A production-grade job discovery platform that continuously monitors public Applicant Tracking Systems (ATS), intelligently filters relevant software engineering opportunities, ranks them based on relevance, and delivers instant notifications through a scalable synchronization engine.*
