@@ -141,15 +141,120 @@ Today, HireScope automatically monitors hundreds of companies, intelligently fil
 
 ## GitHub Actions Scheduler
 
+<img width="1467" height="868" alt="image" src="https://github.com/user-attachments/assets/3281f0d6-c197-45b0-9a0e-2061e65618d9" />
+
+---
+
+## Overall System Architecture
+
+```mermaid
+
+flowchart LR
+
+subgraph Scheduler
+    GH["GitHub Actions (Hourly Trigger)"]
+end
+
+subgraph Backend["HireScope Backend (NestJS)"]
+
+    API["REST API"]
+
+    Engine["Synchronization Engine"]
+
+    Registry["Adapter Registry"]
+
+    Ranking["Ranking Engine"]
+
+    Notify["Notification Service"]
+
+end
+
+subgraph ATS["ATS Providers"]
+
+    GHATS["Greenhouse"]
+
+    LV["Lever"]
+
+    WD["Workday"]
+
+end
+
+subgraph Database
+
+    PG[(Neon PostgreSQL)]
+
+end
+
+subgraph Client
+
+    Dashboard["React Dashboard"]
+
+    Telegram["Telegram"]
+
+end
+
+GH --> API
+
+API --> Engine
+
+Engine --> Registry
+
+Registry --> GHATS
+Registry --> LV
+Registry --> WD
+
+GHATS --> Engine
+LV --> Engine
+WD --> Engine
+
+Engine --> Ranking
+
+Ranking --> PG
+
+PG --> Dashboard
+
+Ranking --> Notify
+
+Notify --> Telegram
+
+Dashboard --> API
+API --> PG
+```
+
 
 
 ---
 
-## System Architecture
+## Adapter Pattern
 
+```mermaid
+classDiagram
 
+class EngineService
+
+class AdapterRegistry
+
+class BaseAdapter {
+    +sync()
+    +fetchJobs()
+    +fetchJobDetail()
+}
+
+class GreenhouseAdapter
+class LeverAdapter
+class WorkdayAdapter
+
+EngineService --> AdapterRegistry
+
+AdapterRegistry --> BaseAdapter
+
+BaseAdapter <|-- GreenhouseAdapter
+BaseAdapter <|-- LeverAdapter
+BaseAdapter <|-- WorkdayAdapter
+```
 
 ---
+
 
 # 🎯 The Problem
 
