@@ -1,12 +1,14 @@
-# Backend
-backend/node_modules
-backend/dist
-backend/.env
+# Dependencies
+**/node_modules/
 
-# Frontend
-frontend/node_modules
-frontend/dist
-frontend/.env
+# Build output
+**/dist/
+**/build/
+
+# Environment variables
+**/.env
+**/.env.*
+!.env.example
 
 # Logs
 *.log
@@ -16,5 +18,5 @@ frontend/.env
 Thumbs.db
 
 # IDE
-.vscode
-.idea
+.vscode/
+.idea/
