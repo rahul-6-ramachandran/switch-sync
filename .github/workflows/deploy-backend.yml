@@ -24,6 +24,7 @@ jobs:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           audience: ${{ secrets.TS_AUDIENCE }}
           tags: tag:github-actions
+          ping: ${{ secrets.SERVER_HOST }}
 
       - name: Configure SSH
         shell: bash
