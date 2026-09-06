@@ -4,7 +4,6 @@ import { Hero } from "./components/Hero";
 import { ValueProposition } from "./components/ValueProposition";
 import { HowItWorks } from "./components/HowItWorks";
 import { Features } from "./components/Features";
-import { DataPipeline } from "./components/DataPipeline";
 import { JobFeedPreview } from "./components/JobFeedPreview";
 import { FinalCTA } from "./components/FinalCTA";
 import { LandingFooter } from "./components/LandingFooter";
