@@ -1,0 +1,111 @@
+import type { Job } from "@/types/job";
+
+export interface LandingJob extends Job {
+  skills: string[];
+  department: string;
+}
+
+export const MOCK_LANDING_JOBS: LandingJob[] = [
+  {
+    id: "landing-1",
+    source: "greenhouse",
+    externalJobId: "gh-4982144",
+    companyName: "Cloudflare",
+    title: "Senior Backend Engineer — Distributed Systems",
+    location: "San Francisco, CA (Remote)",
+    remoteStatus: true,
+    experienceLevel: "senior",
+    applicationUrl: "/dashboard",
+    postedAt: new Date(Date.now() - 1000 * 60 * 35).toISOString(), // 35m ago
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    score: 96,
+    skills: ["Go", "Kubernetes", "Distributed Systems", "gRPC", "eBPF"],
+    department: "Platform Engineering",
+  },
+  {
+    id: "landing-2",
+    source: "ashby",
+    externalJobId: "ash-882031",
+    companyName: "Linear",
+    title: "Full Stack Product Engineer",
+    location: "Remote (Global)",
+    remoteStatus: true,
+    experienceLevel: "mid",
+    applicationUrl: "/dashboard",
+    postedAt: new Date(Date.now() - 1000 * 60 * 80).toISOString(), // 1h ago
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    score: 94,
+    skills: ["TypeScript", "React", "Node.js", "GraphQL", "PostgreSQL"],
+    department: "Core Product",
+  },
+  {
+    id: "landing-3",
+    source: "lever",
+    externalJobId: "lev-551902",
+    companyName: "Datadog",
+    title: "Software Engineer — Metrics & Ingestion Pipeline",
+    location: "New York, NY (Hybrid)",
+    remoteStatus: false,
+    experienceLevel: "mid",
+    applicationUrl: "/dashboard",
+    postedAt: new Date(Date.now() - 1000 * 60 * 150).toISOString(), // 2.5h ago
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    score: 91,
+    skills: ["Go", "Kafka", "PostgreSQL", "Time-Series", "AWS"],
+    department: "Data Platform",
+  },
+  {
+    id: "landing-4",
+    source: "ashby",
+    externalJobId: "ash-310492",
+    companyName: "Supabase",
+    title: "Staff Infrastructure & Cloud Engineer",
+    location: "Remote (US & Europe)",
+    remoteStatus: true,
+    experienceLevel: "senior",
+    applicationUrl: "/dashboard",
+    postedAt: new Date(Date.now() - 1000 * 60 * 220).toISOString(), // 3.5h ago
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    score: 92,
+    skills: ["PostgreSQL", "Elixir", "Terraform", "Rust", "Docker"],
+    department: "Cloud Infrastructure",
+  },
+  {
+    id: "landing-5",
+    source: "greenhouse",
+    externalJobId: "gh-719324",
+    companyName: "Monzo",
+    title: "Backend Engineer — Banking Core",
+    location: "London, UK (Remote)",
+    remoteStatus: true,
+    experienceLevel: "junior",
+    applicationUrl: "/dashboard",
+    postedAt: new Date(Date.now() - 1000 * 60 * 300).toISOString(), // 5h ago
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    score: 88,
+    skills: ["Go", "Microservices", "Event-Driven", "Cassandra"],
+    department: "Core Banking",
+  },
+  {
+    id: "landing-6",
+    source: "lever",
+    externalJobId: "lev-902341",
+    companyName: "Figma",
+    title: "Systems Engineer — Real-time Collaboration Engine",
+    location: "San Francisco, CA (Hybrid)",
+    remoteStatus: false,
+    experienceLevel: "senior",
+    applicationUrl: "/dashboard",
+    postedAt: new Date(Date.now() - 1000 * 60 * 420).toISOString(), // 7h ago
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    score: 95,
+    skills: ["C++", "Rust", "WebAssembly", "TypeScript", "Performance"],
+    department: "Editor Engine",
+  },
+];

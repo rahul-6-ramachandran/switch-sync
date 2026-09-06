@@ -14,9 +14,14 @@ export function NotFound() {
           This page doesn't exist. Let's get you back to the job listings.
         </p>
       </div>
-      <Button asChild>
-        <Link to="/">Back to dashboard</Link>
-      </Button>
+      <div className="flex items-center gap-3">
+        <Button asChild>
+          <Link to="/dashboard">Back to dashboard</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link to="/">Home</Link>
+        </Button>
+      </div>
     </div>
   );
 }
